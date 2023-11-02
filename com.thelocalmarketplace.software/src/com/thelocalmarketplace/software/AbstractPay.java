@@ -11,7 +11,7 @@ import com.tdc.coin.*;
 public abstract class AbstractPay {
 	protected CustomerStationControl customerStationControl;
 	
-	protected int amountDue;
+	protected BigDecimal amountDue;
 	
 	public AbstractPay(CustomerStationControl customerStationControl) {
 		this.customerStationControl = customerStationControl;
@@ -19,9 +19,9 @@ public abstract class AbstractPay {
 	
 	public abstract BigDecimal pay(Order order);
 	
-	public abstract void processPayment(CoinValidator validator, Currency currency, int num);
+	public abstract void processPayment(CoinValidator validator, BigDecimal num);
 	
-	public abstract void endPay();
+	public abstract void fullPaid();
 	
 	
 	//need method that updates how much is due to customer

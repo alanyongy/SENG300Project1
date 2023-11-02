@@ -32,6 +32,11 @@ public class Order {
 		totalUnpaid = totalUnpaid.min(new BigDecimal(value));
 	}
 	
+	public CustomerStationControl getCustomerStationControl() {
+		return customerStationControl;
+	}
+	
+	public void 
 	/**
 	 * methods needed:
 	 * call methods for Total, items, 

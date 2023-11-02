@@ -20,19 +20,19 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 
 	@Override
 	public void enabled(IComponent<? extends IComponentObserver> component) {
-		// TODO Auto-generated method stub
+		// not used in this iteration
 		
 	}
 
 	@Override
 	public void disabled(IComponent<? extends IComponentObserver> component) {
-		// TODO Auto-generated method stub
+		// not used in this iteration
 		
 	}
 
 	@Override
 	public void turnedOn(IComponent<? extends IComponentObserver> component) {
-		// TODO Auto-generated method stub
+		// not used in this iteration
 		
 	}
 
@@ -56,31 +56,32 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 
 	@Override
 	public void coinAdded(CoinStorageUnit unit) {
-		// TODO Auto-generated method stub
+		Order order = customerStationControl.getOrder();
+		updatePayment(order);
 		
 	}
 
 	@Override
 	public void coinsLoaded(CoinStorageUnit unit) {
-		// TODO Auto-generated method stub
+		// not used in this iteration
 		
 	}
 
 	@Override
 	public void coinsUnloaded(CoinStorageUnit unit) {
-		// TODO Auto-generated method stub
+		// not used in this iteration
 		
 	}
 
 	@Override
 	public void validCoinDetected(CoinValidator validator, BigDecimal value) {
-		// TODO Auto-generated method stub
+		processPayment(validator, value);
 		
 	}
 
 	@Override
 	public void invalidCoinDetected(CoinValidator validator) {
-		// TODO Auto-generated method stub
+		customerStationControl.notifyCustomer("Please insert a valid coin");
 		
 	}
 
@@ -89,31 +90,48 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 	    
 	    if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0) {
-	        updateAmountDue(order);
+	        updateRemainingBalance(order);
 	        customerStationControl.notifyCustomer("Please insert your payment");
-	    } else {
-	        float absChange = Math.abs(totalUnpaid.floatValue());
-	        customerStationControl.notifyCustomer("Your change: %.2f".formatted(absChange));
-	    }
-	    
+	    } 
 	    return totalUnpaid;
 	}
 	
-	private void updateAmountDue(Order order) {
-		// TODO Auto-generated method stub
+	private void updateRemainingBalance(Order order) {
+		BigDecimal totalUnpaid = order.getTotalUnpaid();
+		customerStationControl = order.getCustomerStationControl();
+		customerStationControl.notifyCustomer(String.format("Amount due: %.2f", totalUnpaid));
+	}
+	
+	public void updatePayment(Order order) {
+		order.addCoinsPaid(amountDue);
+		amountDue = 0;
+		BigDecimal totalUnpaid = order.getTotalUnpaid();
+		
+		if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0) {
+	        updateRemainingBalance(order);
+	        customerStationControl.notifyCustomer("Please insert your payment");
+	    }
+		
+		System.out.println(totalUnpaid);
+		
+		if (totalUnpaid.compareTo(BigDecimal.ZERO) == 0) {
+			fullPaid();
+		} else if (totalUnpaid.compareTo(BigDecimal.ZERO) < 0) {
+			fullPaid(); //where change would be implemented
+		}
 		
 	}
 		
 
 	@Override
-	public void processPayment(CoinValidator validator, Currency currency, int num) {
-		// TODO Auto-generated method stub
-		
+	public void processPayment(CoinValidator validator, BigDecimal num) {
+		amountDue = num;
 	}
 
 	@Override
-	public void endPay() {
-		// TODO Auto-generated method stub
+	public void fullPaid() {
+		amountDue = BigDecimal.ZERO;
+		
 		
 	}
 	
