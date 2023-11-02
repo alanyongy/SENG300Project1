@@ -17,7 +17,7 @@ public class WeightDiscrepancy {
 		
 	}
 	
-	public void WeightDiscrepancyEvent(DiscrepancyListener listener) {
+	public static void WeightDiscrepancyEvent(DiscrepancyListener listener) {
 		
 		BlockCustomer();
 		SignalCustomer();
