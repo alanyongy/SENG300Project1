@@ -1,6 +1,8 @@
 package com.thelocalmarketplace.software;
 
 import com.thelocalmarketplace.hardware.*;
+import com.thelocalmarketplace.hardware.external.ProductDatabases;
+import com.jjjwelectronics.scanner.Barcode;
 import com.tdc.*;
 import com.tdc.coin.*;
 
@@ -44,10 +46,15 @@ public class Order {
 		return total;
 	}
 	
-	public void add(BarcodedProduct item) {
+	public void add(Barcode barcode) {
+		customerStationControl.block();
+		
+		BarcodedProduct item = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode); 
 		items.add(item);
 		total = total.add(new BigDecimal(item.getPrice()));
 		totalUnpaid = totalUnpaid.add(new BigDecimal(item.getPrice()));
+		
+		
 	}
 	
 
