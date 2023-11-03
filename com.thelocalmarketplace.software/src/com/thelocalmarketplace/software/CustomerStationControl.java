@@ -5,5 +5,13 @@
 package com.thelocalmarketplace.software;
 
 public class CustomerStationControl {
-
+	public boolean blocked = false;
+	
+	public void block() {
+		blocked = true;
+	}
+	
+	public void unblock() {
+		blocked = false;
+	}
 }

@@ -12,6 +12,8 @@ import com.jjjwelectronics.scanner.BarcodedItem;
 
 public class DiscrepancyListener implements ElectronicScaleListener {
 	
+	protected CustomerStationControl Controller; 
+	
 	protected Mass expectedMass; // Must be updated based on current cart
 	protected Mass actualMass;
 	protected Mass sensLimit;
@@ -24,11 +26,12 @@ public class DiscrepancyListener implements ElectronicScaleListener {
 		sensLimit = scale.getSensitivityLimit();
 		expectedMass = getExpectedMass();
 		delta = actualMass.difference(expectedMass);
+		
 		if (delta.compareTo(sensLimit) == 1 && Discrepancy.checkStatus() == false) {
-			Discrepancy.WeightDiscrepancyEvent(this);}
+			Discrepancy.WeightDiscrepancyEvent(Controller);}
 		
 		else if (delta.compareTo(sensLimit) != 1 && Discrepancy.checkStatus() == true) {
-			Discrepancy.Unblock();
+			Discrepancy.Unblock(Controller);
 		}
 				
 		
@@ -50,6 +53,12 @@ public class DiscrepancyListener implements ElectronicScaleListener {
 		return (Sum);
 		
 	}
+	
+	
+	public DiscrepancyListener(CustomerStationControl CSC){
+		Controller = CSC;
+	}
+	
 	
 	
 	public void theMasOnTheScaleHasExceededItsLimit(IElectronicScale scale) {}

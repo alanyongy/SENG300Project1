@@ -2,10 +2,9 @@ package com.thelocalmarketplace.software;
 
 public class WeightDiscrepancy {
 	
-	boolean status = false;
-	private static void BlockCustomer() {
-		// Needs implementation for blocking pay with coin and add item barcode
-	}
+	private boolean status = false;
+	
+
 	
 	private static void SignalCustomer() {
 		
@@ -14,13 +13,14 @@ public class WeightDiscrepancy {
 	private static void SignalAttendant() {
 		
 	}
-	public void Unblock() {
-		
+	public void Unblock(CustomerStationControl Controller) {
+		Controller.unblock();
 	}
 	
-	public void WeightDiscrepancyEvent(DiscrepancyListener listener) {
+	public void WeightDiscrepancyEvent(CustomerStationControl Controller) {
 		status = true;
-		BlockCustomer();
+		
+		Controller.block();
 		SignalCustomer();
 		SignalAttendant();
 		
