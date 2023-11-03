@@ -10,7 +10,7 @@ import com.jjjwelectronics.scale.ElectronicScaleListener;
 import com.jjjwelectronics.scale.IElectronicScale;
 import com.thelocalmarketplace.hardware.BarcodedProduct;
 
-public class DiscrepancyListener implements ElectronicScaleListener {
+public class scaleListener implements ElectronicScaleListener {
 	
 	protected CustomerStationControl Controller; 
 	
@@ -58,7 +58,7 @@ public class DiscrepancyListener implements ElectronicScaleListener {
 	}
 	
 	
-	public DiscrepancyListener(CustomerStationControl CSC){
+	public scaleListener(CustomerStationControl CSC){
 		Controller = CSC;
 	}
 	
