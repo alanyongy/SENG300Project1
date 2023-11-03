@@ -4,6 +4,7 @@
 // TODO: Add your names and if you are the last person to do so delete this comment
 package com.thelocalmarketplace.software;
 
+
 import com.thelocalmarketplace.hardware.*;
 import com.tdc.*;
 import com.tdc.coin.*;
@@ -63,6 +64,7 @@ public class CustomerStationControl {
 	 * method that calls notifyCustomer to scan next item
 	 * method that adds BarcodedProduct to order -  probably calls add method from order 
 	 */
+
 	
 	public void block() {
 		blocked = true;
@@ -72,3 +74,6 @@ public class CustomerStationControl {
 		blocked = false;
 	}
 }
+
+
+
