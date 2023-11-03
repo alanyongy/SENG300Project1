@@ -55,10 +55,8 @@ public class Order {
 			//Fetching item from database based on scanned barcode
 			BarcodedProduct item = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
 			
-			//Updating expected weight from bagging area
-			double itemExpectedWeight = item.getExpectedWeight();
-			customerStationControl.discrepancyListener.updateExpectedMass(new Mass(itemExpectedWeight));
-			
+			//weight and expected weight is done through querying the items in the order list
+						
 			//Adding item to session order
 			items.add(item);
 			total = total.add(new BigDecimal(item.getPrice()));
