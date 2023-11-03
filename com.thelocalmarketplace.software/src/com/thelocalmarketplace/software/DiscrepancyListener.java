@@ -1,26 +1,35 @@
 package com.thelocalmarketplace.software;
 
+import java.util.ArrayList;
+
 import com.jjjwelectronics.IDevice;
 import com.jjjwelectronics.IDeviceListener;
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.Mass.MassDifference;
 import com.jjjwelectronics.scale.ElectronicScaleListener;
 import com.jjjwelectronics.scale.IElectronicScale;
+import com.jjjwelectronics.scanner.BarcodedItem;
 
 public class DiscrepancyListener implements ElectronicScaleListener {
 	
-	protected Mass expectedMass; // Must be updated based on current cart, getter method in another class
+	protected Mass expectedMass; // Must be updated based on current cart
 	protected Mass actualMass;
 	protected Mass sensLimit;
 	protected MassDifference delta;
+	protected WeightDiscrepancy Discrepancy; 
+	protected Mass Sum;
 	
 	public void theMassOnTheScaleHasChanged(IElectronicScale scale, Mass mass){
 		actualMass = mass;
 		sensLimit = scale.getSensitivityLimit();
+		expectedMass = getExpectedMass();
 		delta = actualMass.difference(expectedMass);
-		if (delta.compareTo(sensLimit) == 1) {
-			WeightDiscrepancy.WeightDiscrepancyEvent(this);}
-			else {return;} 
+		if (delta.compareTo(sensLimit) == 1 && Discrepancy.checkStatus() == false) {
+			Discrepancy.WeightDiscrepancyEvent(this);}
+		
+		else if (delta.compareTo(sensLimit) != 1 && Discrepancy.checkStatus() == true) {
+			Discrepancy.Unblock();
+		}
 				
 		
 		
@@ -29,6 +38,19 @@ public class DiscrepancyListener implements ElectronicScaleListener {
 	public int getStatus() {
 		return(delta.compareTo(sensLimit));	
 	}
+	
+	public Mass getExpectedMass() {
+		// needs items in order to have a mass so that the expected mass can be calculated
+		// PLACEHOLDER BARCODED PRODUCT ARRAY, SHOULD NOT BE FINAL
+		ArrayList<BarcodedItem> items = new ArrayList<BarcodedItem>();
+		items = Order.getItems;
+		for (BarcodedItem i : items) {
+			Sum = Sum.sum(i.getMass());	
+		}
+		return (Sum);
+		
+	}
+	
 	
 	public void theMasOnTheScaleHasExceededItsLimit(IElectronicScale scale) {}
 	
