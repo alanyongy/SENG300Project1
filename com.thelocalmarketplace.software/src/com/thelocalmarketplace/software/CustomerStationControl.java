@@ -13,7 +13,9 @@ public class CustomerStationControl {
 	private SelfCheckoutStation station;
 	
 	private PayCoin payCoinController;
-	private Order order;
+	public Order order;
+	public Boolean blocked;
+	public DiscrepancyListener discrepancyListener; //TODO needs to be set
 	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
 		this.station = customerStationControl;
@@ -25,6 +27,10 @@ public class CustomerStationControl {
 		payCoinController = new PayCoin(this);
 		customerStationControl.coinValidator.attach(payCoinController);
 		customerStationControl.coinStorage.attach(payCoinController);
+		
+		//register listener to station's barcode scanner
+		BarcodeScanListener barcodeScanListener = new BarcodeScanListener(this);
+		customerStationControl.scanner.register(barcodeScanListener);
 	}
 	
 	public SelfCheckoutStation getSelfCheckoutStation() {
@@ -57,4 +63,12 @@ public class CustomerStationControl {
 	 * method that calls notifyCustomer to scan next item
 	 * method that adds BarcodedProduct to order -  probably calls add method from order 
 	 */
+	
+	public void block() {
+		blocked = true;
+	}
+	
+	public void unblock() {
+		blocked = false;
+	}
 }
