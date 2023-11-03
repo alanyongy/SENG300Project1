@@ -2,6 +2,7 @@ package com.thelocalmarketplace.software;
 
 import com.thelocalmarketplace.hardware.*;
 import com.thelocalmarketplace.hardware.external.ProductDatabases;
+import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.scanner.Barcode;
 import com.tdc.*;
 import com.tdc.coin.*;
@@ -47,15 +48,39 @@ public class Order {
 	}
 	
 	public void add(Barcode barcode) {
-		customerStationControl.block();
 		
-		BarcodedProduct item = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode); 
-		items.add(item);
-		total = total.add(new BigDecimal(item.getPrice()));
-		totalUnpaid = totalUnpaid.add(new BigDecimal(item.getPrice()));
-		
-		
+		if(preconditionsMet(barcode)) {
+			customerStationControl.block();
+			
+			//Fetching item from database based on scanned barcode
+			BarcodedProduct item = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
+			
+			//Updating expected weight from bagging area
+			double itemExpectedWeight = item.getExpectedWeight();
+			customerStationControl.discrepancyListener.updateExpectedMass(new Mass(itemExpectedWeight));
+			
+			//Adding item to session order
+			items.add(item);
+			total = total.add(new BigDecimal(item.getPrice()));
+			totalUnpaid = totalUnpaid.add(new BigDecimal(item.getPrice()));
+			
+			//Signaling to customer to place scanned item into bagging area
+				//unimplemented due to lack of user interface
+			
+			//the customer station is unblocked following a non-discrepancy creating weight change from the scale listener
+		}
 	}
 	
+	
+	public boolean preconditionsMet(Barcode barcode) {
+		if(customerStationControl.blocked) return true;
+		return false;
+	}
+	
+	public boolean preconditionsMet(PriceLookUpCode plu) {
+		//preconditions for adding an item by PLU.
+		//implemented only to show code structure.	
+		return false;
+	}
 
 }
