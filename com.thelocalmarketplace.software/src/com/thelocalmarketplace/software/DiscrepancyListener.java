@@ -8,10 +8,6 @@ import com.jjjwelectronics.scale.IElectronicScale;
 
 public class DiscrepancyListener implements ElectronicScaleListener {
 	protected Mass expectedMass;
-	
-	public void updateExpectedMass(Mass mass) {
-		expectedMass = mass;
-	}
 
 	@Override
 	public void aDeviceHasBeenEnabled(IDevice<? extends IDeviceListener> device) {
