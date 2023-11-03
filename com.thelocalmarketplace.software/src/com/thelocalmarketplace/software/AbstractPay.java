@@ -1,7 +1,5 @@
 package com.thelocalmarketplace.software;
 
-import com.thelocalmarketplace.hardware.*;
-
 import java.math.BigDecimal;
 import java.util.Currency;
 

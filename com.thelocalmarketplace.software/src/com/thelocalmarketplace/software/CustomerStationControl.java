@@ -13,7 +13,7 @@ public class CustomerStationControl {
 	private SelfCheckoutStation station;
 	
 	private PayCoin payCoinController;
-	private Order order;
+	public Order order;
 	public Boolean blocked;
 	public DiscrepancyListener discrepancyListener; //TODO needs to be set
 	
@@ -27,6 +27,10 @@ public class CustomerStationControl {
 		payCoinController = new PayCoin(this);
 		customerStationControl.coinValidator.attach(payCoinController);
 		customerStationControl.coinStorage.attach(payCoinController);
+		
+		//register listener to station's barcode scanner
+		BarcodeScanListener barcodeScanListener = new BarcodeScanListener(this);
+		customerStationControl.scanner.register(barcodeScanListener);
 	}
 	
 	public SelfCheckoutStation getSelfCheckoutStation() {
