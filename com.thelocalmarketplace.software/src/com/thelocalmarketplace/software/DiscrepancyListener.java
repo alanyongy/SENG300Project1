@@ -8,7 +8,7 @@ import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.Mass.MassDifference;
 import com.jjjwelectronics.scale.ElectronicScaleListener;
 import com.jjjwelectronics.scale.IElectronicScale;
-import com.jjjwelectronics.scanner.BarcodedItem;
+import com.thelocalmarketplace.hardware.BarcodedProduct;
 
 public class DiscrepancyListener implements ElectronicScaleListener {
 	
@@ -45,10 +45,13 @@ public class DiscrepancyListener implements ElectronicScaleListener {
 	public Mass getExpectedMass() {
 		// needs items in order to have a mass so that the expected mass can be calculated
 		// PLACEHOLDER BARCODED PRODUCT ARRAY, SHOULD NOT BE FINAL
-		ArrayList<BarcodedItem> items = new ArrayList<BarcodedItem>();
+		ArrayList<BarcodedProduct> items = new ArrayList<BarcodedProduct>();
 		items = Order.getItems;
-		for (BarcodedItem i : items) {
-			Sum = Sum.sum(i.getMass());	
+		for (BarcodedProduct i : items) {
+			Mass iMass = new Mass(i.getExpectedWeight());
+			
+			
+			Sum = Sum.sum(iMass);	
 		}
 		return (Sum);
 		
