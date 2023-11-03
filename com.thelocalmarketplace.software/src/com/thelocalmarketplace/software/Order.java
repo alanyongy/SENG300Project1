@@ -4,11 +4,8 @@ import com.thelocalmarketplace.hardware.*;
 import com.thelocalmarketplace.hardware.external.ProductDatabases;
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.scanner.Barcode;
-import com.tdc.*;
-import com.tdc.coin.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.ArrayList;
 
 public class Order {
