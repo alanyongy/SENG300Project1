@@ -59,8 +59,7 @@ public class Order {
 			total = total.add(new BigDecimal(item.getPrice()));
 			totalUnpaid = totalUnpaid.add(new BigDecimal(item.getPrice()));
 			
-			//Signaling to customer to place scanned item into bagging area
-				//unimplemented due to lack of user interface
+			customerStationControl.notifyCustomer("Place the scanned item in the bagging area");
 			
 			//the customer station is unblocked following a non-discrepancy creating weight change from the scale listener
 		}
