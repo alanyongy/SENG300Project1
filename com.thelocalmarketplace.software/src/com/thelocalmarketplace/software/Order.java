@@ -28,20 +28,27 @@ public class Order {
 		return totalUnpaid;
 	}
 	
-	public void addCoinsPaid(int value) {
-		totalUnpaid = totalUnpaid.min(new BigDecimal(value));
+	public void addCoinsPaid(BigDecimal value) {
+		totalUnpaid = totalUnpaid.min(value);
 	}
 	
 	public CustomerStationControl getCustomerStationControl() {
 		return customerStationControl;
 	}
 	
-	public void 
-	/**
-	 * methods needed:
-	 * call methods for Total, items, 
-	 * IMPORTANT: add method - adds item to items, adds price of each item
-	 * to item total and total unpaid, keeps track of weight
-	 */
+	public ArrayList<Product> getItems() {
+		return items;
+	}
+	
+	public BigDecimal getTotal() {
+		return total;
+	}
+	
+	public void add(BarcodedProduct item) {
+		items.add(item);
+		total = total.add(new BigDecimal(item.getPrice()));
+		totalUnpaid = totalUnpaid.add(new BigDecimal(item.getPrice()));
+	}
+	
 
 }

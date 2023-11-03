@@ -43,14 +43,9 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	}
 
 	@Override
-	public void coinInserted(CoinSlot slot) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void coinsFull(CoinStorageUnit unit) {
-		// TODO Auto-generated method stub
+		coinAdded(unit);
+		customerStationControl.notifyAttendant("Coin Storage Full");
 		
 	}
 
@@ -104,7 +99,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	
 	public void updatePayment(Order order) {
 		order.addCoinsPaid(amountDue);
-		amountDue = 0;
+		amountDue = BigDecimal.ZERO;
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 		
 		if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0) {
@@ -132,6 +127,12 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	public void fullPaid() {
 		amountDue = BigDecimal.ZERO;
 		
+		
+	}
+
+	@Override
+	public void coinInserted(CoinSlot slot) {
+		// TODO Auto-generated method stub
 		
 	}
 	

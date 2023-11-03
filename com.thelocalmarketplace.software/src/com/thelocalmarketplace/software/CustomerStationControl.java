@@ -25,7 +25,6 @@ public class CustomerStationControl {
 		payCoinController = new PayCoin(this);
 		customerStationControl.coinValidator.attach(payCoinController);
 		customerStationControl.coinStorage.attach(payCoinController);
-		customerStationControl.coinSlot.attach(payCoinController);
 	}
 	
 	public SelfCheckoutStation getSelfCheckoutStation() {
