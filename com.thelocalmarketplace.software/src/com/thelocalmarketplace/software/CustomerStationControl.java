@@ -14,6 +14,7 @@ public class CustomerStationControl {
 	
 	private PayCoin payCoinController;
 	private Order order;
+		public boolean blocked = false;
 	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
 		this.station = customerStationControl;
@@ -57,4 +58,12 @@ public class CustomerStationControl {
 	 * method that calls notifyCustomer to scan next item
 	 * method that adds BarcodedProduct to order -  probably calls add method from order 
 	 */
+	 
+	public void block() {
+		blocked = true;
+	}
+	
+	public void unblock() {
+		blocked = false;
+	}
 }
