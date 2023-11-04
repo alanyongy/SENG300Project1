@@ -18,6 +18,9 @@ public class CustomerStationControl {
 	public Boolean blocked = false;
 	public ScaleListener scaleListener; //TODO needs to be set
 	
+	private Boolean customerNotified;
+	private Boolean attendantNotified;
+	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
 		this.station = customerStationControl;
 		
@@ -51,11 +54,13 @@ public class CustomerStationControl {
 	
 	//displays message to attendant
 	public void notifyAttendant(String message) {
+		attendantNotified = true;
 		System.out.println("Attendant: " + message);
 	}
 	
 	//displays message to customer
 	public void notifyCustomer(String message) {
+		customerNotified = true; 
 		System.out.println("Customer: " + message);
 	}
 	
@@ -67,7 +72,14 @@ public class CustomerStationControl {
 	 * method that calls notifyCustomer to scan next item
 	 * method that adds BarcodedProduct to order -  probably calls add method from order 
 	 */
-
+	
+	public Boolean getCustomerNotified() {
+	    return customerNotified;
+	}
+	
+	public Boolean getAttendantNotified() {
+	    return attendantNotified;
+	}
 	
 	public void block() {
 		blocked = true;

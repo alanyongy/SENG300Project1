@@ -98,8 +98,8 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	}
 	
 	public void updatePayment(Order order) {
-		order.addCoinsPaid(amountDue);
 		amountDue = BigDecimal.ZERO;
+		order.addCoinsPaid(amountDue);
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 		
 		if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0) {
