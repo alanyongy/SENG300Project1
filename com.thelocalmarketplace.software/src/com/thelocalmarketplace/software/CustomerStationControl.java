@@ -15,7 +15,7 @@ public class CustomerStationControl {
 	
 	private PayCoin payCoinController;
 	public Order order;
-	public Boolean blocked;
+	public Boolean blocked = false;
 	public ScaleListener scaleListener; //TODO needs to be set
 	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
