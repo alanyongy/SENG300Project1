@@ -17,9 +17,21 @@ public class CustomerStationControl {
 	public Boolean blocked = false;
 	private PayCoin payCoinController;
 	
-	//Used for testing as signaling UI will not be implemented in this iteration
-	public boolean attendantNotified = false;
-	public boolean customerNotified = false;
+	
+	public String notifyDiscrepancyCode =  "discrepancy";
+	public String notifyInsertPaymentCode =  "insertPayment";
+	public String notifyPlaceItemInBaggingAreaCode =  "placeItemInBaggingArea";
+	public String notifyOtherCode =  "other";
+	/**Used for testing as signaling UI will not be implemented in this iteration.
+	 *Possible values: discrepancy, insertPayment, placeItemInBaggingArea 
+	 */
+	public String attendantNotified = "";
+	/**Used for testing as signaling UI will not be implemented in this iteration.
+	 *Possible values: discrepancy, insertPayment, placeItemInBaggingArea 
+	 */
+	public String customerNotified = "";
+
+	
 	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
 		this.station = customerStationControl;
@@ -53,15 +65,15 @@ public class CustomerStationControl {
 	}
 	
 	//displays message to attendant
-	public void notifyAttendant(String message) {
+	public void notifyAttendant(String message, String code) {
 		System.out.println("Attendant: " + message);
-		attendantNotified = true;
+		attendantNotified = code;
 	}
 	
 	//displays message to customer
-	public void notifyCustomer(String message) {
+	public void notifyCustomer(String message, String code) {
 		System.out.println("Customer: " + message);
-		customerNotified = true;
+		customerNotified = code;
 	}
 	
 	public Order getOrder() {

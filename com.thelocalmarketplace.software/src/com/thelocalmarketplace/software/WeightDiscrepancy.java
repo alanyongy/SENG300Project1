@@ -27,10 +27,9 @@ public class WeightDiscrepancy {
 	 */			
 	public void WeightDiscrepancyEvent(CustomerStationControl Controller) {
 		status = true;
-		
 		Controller.block();		
-		Controller.notifyCustomer("Weight discrepancy detected. %n Please adjust items in bagging area before paying or adding new items %n");
-		Controller.notifyAttendant("Weight Discrepancy at Customer Station");
+		Controller.notifyCustomer("Weight discrepancy detected. %n Please adjust items in bagging area before paying or adding new items %n", Controller.notifyDiscrepancyCode);
+		Controller.notifyAttendant("Weight Discrepancy at Customer Station", Controller.notifyDiscrepancyCode);
 		
 		
 	}

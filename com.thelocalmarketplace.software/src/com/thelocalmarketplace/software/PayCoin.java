@@ -45,7 +45,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	@Override
 	public void coinsFull(CoinStorageUnit unit) {
 		coinAdded(unit);
-		customerStationControl.notifyAttendant("Coin Storage Full");
+		customerStationControl.notifyAttendant("Coin Storage Full", customerStationControl.notifyOtherCode);
 
 	}
 
@@ -76,7 +76,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 
 	@Override
 	public void invalidCoinDetected(CoinValidator validator) {
-		customerStationControl.notifyCustomer("Please insert a valid coin");
+		customerStationControl.notifyCustomer("Please insert a valid coin", customerStationControl.notifyOtherCode);
 		
 	}
 
@@ -86,7 +86,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	    
 	    if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0 && !customerStationControl.isBlocked()) {
 	        updateRemainingBalance(order);
-	        customerStationControl.notifyCustomer("Please insert your payment");
+	        customerStationControl.notifyCustomer("Please insert your payment", customerStationControl.notifyInsertPaymentCode);
 	    } 
 	    return totalUnpaid;
 	}
@@ -94,7 +94,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	private void updateRemainingBalance(Order order) {
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 		customerStationControl = order.getCustomerStationControl();
-		customerStationControl.notifyCustomer(String.format("Amount due: %.2f", totalUnpaid));
+		customerStationControl.notifyCustomer(String.format("Amount due: %.2f", totalUnpaid), customerStationControl.notifyOtherCode);
 	}
 	
 	public void updatePayment(Order order) {
@@ -104,7 +104,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 		
 		if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0) {
 	        updateRemainingBalance(order);
-	        customerStationControl.notifyCustomer("Please insert your payment");
+	        customerStationControl.notifyCustomer("Please insert your payment", customerStationControl.notifyInsertPaymentCode);
 	    }
 		
 		System.out.println(totalUnpaid);
