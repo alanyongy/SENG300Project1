@@ -1,5 +1,7 @@
 package com.thelocalmarketplace.software;
 
+import java.util.ResourceBundle.Control;
+
 import com.jjjwelectronics.IDevice;
 import com.jjjwelectronics.IDeviceListener;
 import com.jjjwelectronics.Mass;
@@ -32,7 +34,7 @@ public class ScaleListener implements ElectronicScaleListener {
 	/**
 	 * Difference between actual and expected mass on scale
 	 */
-	protected MassDifference delta;
+	protected Mass delta;
 	/**
 	 * WeightDiscrepancy object to be enabled and disabled by listener
 	 */
@@ -44,17 +46,26 @@ public class ScaleListener implements ElectronicScaleListener {
 	 * If it isn't, stops an active WeightDiscrepancyEvent or does nothing if one is not active. 
 	 */
 	public void theMassOnTheScaleHasChanged(IElectronicScale scale, Mass mass){
+
 		actualMass = mass;
 		sensLimit = scale.getSensitivityLimit();
 		expectedMass = Controller.order.getExpectedMass();
-		delta = actualMass.difference(expectedMass);
-		
+		delta = actualMass.difference(expectedMass).abs();
+
+		// Address Scenario: New weight added to the scale that causes expected mass to differ from actual mass
 		if (delta.compareTo(sensLimit) == 1 && Discrepancy.checkStatus() == false) {
 			Discrepancy.WeightDiscrepancyEvent(Controller);}
-		
+		// Address Scenario: New weight added causes the expected mass to match the actual mass, resolving an existing discrepancy block
 		else if (delta.compareTo(sensLimit) != 1 && Discrepancy.checkStatus() == true) {
 			Discrepancy.Unblock(Controller);
+		} 
+		// Address Scenario: New weight added causes the expected mass to match the actual mass, resolving block in controller caused by add in order class
+		else if (delta.compareTo(sensLimit) != 1 && Controller.blocked == true) {
+			Controller.unblock();
 		}
+		// If all these scenarios are false that means that either: Discrepancy is active and the latest mass change did not make
+		// expected weight match actual weight. OR Discrepancy is inactive,the added weight caused the expected mass to match actual mass, and the
+		// controller is not blocked. (I dont think this is ever true)
 	}
 
 	/**
@@ -64,6 +75,7 @@ public class ScaleListener implements ElectronicScaleListener {
 	 */				
 	public ScaleListener(CustomerStationControl CSC){
 		Controller = CSC;
+		Discrepancy = new WeightDiscrepancy();
 	}
 	
 	public void theMasOnTheScaleHasExceededItsLimit(IElectronicScale scale) {}
@@ -99,10 +111,4 @@ public class ScaleListener implements ElectronicScaleListener {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	
-
-	
-	
 }
