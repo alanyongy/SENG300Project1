@@ -45,6 +45,11 @@ public class Order {
 		return total;
 	}
 	
+	/**
+	 * Adds an product with a barcode to the order list as a new item with 
+	 * it's mass assigned to the expected weight of the product.
+	 * @param barcode
+	 */
 	public void add(Barcode barcode) {
 		if(preconditionsMet(barcode)) {
 			customerStationControl.block();
@@ -66,16 +71,31 @@ public class Order {
 		}
 	}
 	
+	/**
+	 * Adds an item to the order list by PLU code.
+	 * Only used to show code structure in overloading the add method 
+	 * to support the various ways of adding an item to the order list.
+	 * @param plu 
+	 */
+	public void add(PriceLookUpCode plu) {}
 	
+	
+	/**Checks if the preconditions are met for adding a barcode product to the order list.
+	 * @param barcode
+	 * @return
+	 */
 	public boolean preconditionsMet(Barcode barcode) {
 		if(customerStationControl.blocked) return true;
 		return false;
 	}
 	
-	public boolean preconditionsMet(PriceLookUpCode plu) {
-		//preconditions for adding an item by PLU.
-		//implemented only to show code structure.	
-		return false;
-	}
+	
+	/**Checks if the preconditions are met for adding a PLU product to the order list.
+	 * Only used to show code structure in overloading the preconditionsMet method
+	 * to support differing preconditions for the various ways of adding an item to the order list.
+	 * @param plu
+	 * @return
+	 */
+	public boolean preconditionsMet(PriceLookUpCode plu) {return false;}
 
 }

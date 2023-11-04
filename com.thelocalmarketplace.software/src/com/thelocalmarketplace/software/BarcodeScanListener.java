@@ -6,6 +6,10 @@ import com.jjjwelectronics.scanner.Barcode;
 import com.jjjwelectronics.scanner.BarcodeScannerListener;
 import com.jjjwelectronics.scanner.IBarcodeScanner;
 
+/**Listens for events thrown by a scanner and takes appropriate actions.
+ * @author Alan
+ *
+ */
 public class BarcodeScanListener implements BarcodeScannerListener{
 	CustomerStationControl customerStationControl;
 	
@@ -40,7 +44,6 @@ public class BarcodeScanListener implements BarcodeScannerListener{
 	@Override
 	public void aBarcodeHasBeenScanned(IBarcodeScanner barcodeScanner, Barcode barcode) {
 		customerStationControl.order.add(barcode);
-		
 	}
 	
 }
