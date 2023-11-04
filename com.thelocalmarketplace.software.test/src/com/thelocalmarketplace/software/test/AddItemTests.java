@@ -34,7 +34,6 @@ public class AddItemTests {
 		ExampleItems.updateDatabase();
 	}
 	
-	
 	@Test
 	public void itemAddedWhenScanned() {
 		ArrayList<SessionItem> items = control.order.getItems();
@@ -51,9 +50,15 @@ public class AddItemTests {
 	
 	@Test
 	public void systemBlockedWhenAdded() {
+		ArrayList<SessionItem> items = control.order.getItems();
+		
 		assertFalse(control.blocked);
 		station.scanner.scan(ExampleItems.PeanutButter.barcodedItem);
+		assertEquals(1, items.size());
 		assertTrue(control.blocked);
+		station.scanner.scan(ExampleItems.PotatoChips.barcodedItem);
+		assertEquals(1, items.size());
+		
 	}
 	
 	@Test
@@ -81,6 +86,12 @@ public class AddItemTests {
 		assertTrue(control.blocked);
 		station.baggingArea.addAnItem(ExampleItems.AppleJuice.barcodedItem);
 		assertFalse(control.blocked);
-		
+	}
+	
+	@Test
+	public void notifiesCustomerToBagItem() {
+		assertEquals(control.customerNotified, "");
+		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
+		assertEquals(control.customerNotified, control.notifyPlaceItemInBaggingAreaCode);
 	}
 }
