@@ -71,8 +71,7 @@ public class Order {
 	
 	
 	public boolean preconditionsMet(Barcode barcode) {
-		if(customerStationControl.blocked) return true;
-		return false;
+		return customerStationControl.blocked;
 	}
 	
 	public boolean preconditionsMet(PriceLookUpCode plu) {
