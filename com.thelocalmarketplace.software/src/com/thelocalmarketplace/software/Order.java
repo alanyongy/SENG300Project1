@@ -2,6 +2,7 @@ package com.thelocalmarketplace.software;
 
 import com.thelocalmarketplace.hardware.*;
 import com.thelocalmarketplace.hardware.external.ProductDatabases;
+import com.jjjwelectronics.Item;
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.scanner.Barcode;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class Order {
 
 	private CustomerStationControl customerStationControl;
-	private ArrayList<Product> items;
+	private ArrayList<SessionItem> items;
 	
 	private BigDecimal total; //total price
 	private BigDecimal totalUnpaid; //total UNPAID price
@@ -19,7 +20,7 @@ public class Order {
 	
 	public Order(CustomerStationControl customerStationControl) {
 		this.customerStationControl = customerStationControl;
-		items = new ArrayList<Product>();
+		items = new ArrayList<SessionItem>();
 		total = new BigDecimal(0);
 		totalUnpaid = new BigDecimal(0);
 	}
@@ -36,7 +37,7 @@ public class Order {
 		return customerStationControl;
 	}
 	
-	public ArrayList<Product> getItems() {
+	public ArrayList<SessionItem> getItems() {
 		return items;
 	}
 	
@@ -45,19 +46,19 @@ public class Order {
 	}
 	
 	public void add(Barcode barcode) {
-		
 		if(preconditionsMet(barcode)) {
 			customerStationControl.block();
 			
 			//Fetching item from database based on scanned barcode
-			BarcodedProduct item = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
+			BarcodedProduct itemProduct = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
+			SessionItem item = new SessionItem(new Mass(itemProduct.getExpectedWeight()));
 			
 			//weight and expected weight is done through querying the items in the order list
 						
 			//Adding item to session order
 			items.add(item);
-			total = total.add(new BigDecimal(item.getPrice()));
-			totalUnpaid = totalUnpaid.add(new BigDecimal(item.getPrice()));
+			total = total.add(new BigDecimal(itemProduct.getPrice()));
+			totalUnpaid = totalUnpaid.add(new BigDecimal(itemProduct.getPrice()));
 			
 			customerStationControl.notifyCustomer("Place the scanned item in the bagging area");
 			

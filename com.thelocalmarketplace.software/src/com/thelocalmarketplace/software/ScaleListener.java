@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.jjjwelectronics.IDevice;
 import com.jjjwelectronics.IDeviceListener;
+import com.jjjwelectronics.Item;
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.Mass.MassDifference;
 import com.jjjwelectronics.scale.ElectronicScaleListener;
@@ -45,10 +46,10 @@ public class ScaleListener implements ElectronicScaleListener {
 	public Mass getExpectedMass() {
 		// needs items in order to have a mass so that the expected mass can be calculated
 		// PLACEHOLDER BARCODED PRODUCT ARRAY, SHOULD NOT BE FINAL
-		ArrayList<BarcodedProduct> items = new ArrayList<BarcodedProduct>();
-		items = Order.getItems;
-		for (BarcodedProduct i : items) {
-			Mass iMass = new Mass(i.getExpectedWeight());
+		ArrayList<SessionItem> items = new ArrayList<SessionItem>();
+		items = Controller.order.getItems();
+		for (SessionItem i : items) {
+			Mass iMass = i.getMass();
 			
 			
 			Sum = Sum.sum(iMass);	
