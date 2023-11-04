@@ -117,7 +117,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	 */
 	@Override
 	public void invalidCoinDetected(CoinValidator validator) {
-		customerStationControl.notifyCustomer("Please insert a valid coin", customerStationControl.notifyOtherCode);
+		customerStationControl.notifyCustomer("Please insert a valid coin", customerStationControl.notifyInvalidCoinCode);
 		
 	}
 
@@ -140,7 +140,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	 * notifies the customer of the unpaid amount for the order
 	 * @param order	the customer's order for which they are paying
 	 */
-	private void updateRemainingBalance(Order order) {
+	public void updateRemainingBalance(Order order) {
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 		customerStationControl = order.getCustomerStationControl();
 		customerStationControl.notifyCustomer(String.format("Amount due: %.2f", totalUnpaid), customerStationControl.notifyOtherCode);
@@ -151,8 +151,8 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	 * @param order the customer's order for which payment is being processed
 	 */
 	public void updatePayment(Order order) {
-		order.addCoinsPaid(amountDue);
 		amountDue = BigDecimal.ZERO;
+		order.addCoinsPaid(amountDue);
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 		
 		if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0) {

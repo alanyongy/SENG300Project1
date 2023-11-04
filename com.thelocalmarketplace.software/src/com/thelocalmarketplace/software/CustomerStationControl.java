@@ -22,6 +22,7 @@ public class CustomerStationControl {
 	public String notifyInsertPaymentCode =  "insertPayment";
 	public String notifyPlaceItemInBaggingAreaCode =  "placeItemInBaggingArea";
 	public String notifyOtherCode =  "other";
+	public String notifyInvalidCoinCode = "invalidCoin";
 	/**Used for testing as signaling UI will not be implemented in this iteration.
 	 *Possible values: discrepancy, insertPayment, placeItemInBaggingArea 
 	 */
@@ -64,11 +65,13 @@ public class CustomerStationControl {
 	}
 	
 	public void notifyAttendant(String message, String code) {
+		lastNotification = ("Attendant: " + message);
 		System.out.println("Attendant: " + message);
 		attendantNotified = code;
 	}
 	
 	public void notifyCustomer(String message, String code) {
+		lastNotification = ("Customer: " + message);
 		System.out.println("Customer: " + message);
 		customerNotified = code;
 	}

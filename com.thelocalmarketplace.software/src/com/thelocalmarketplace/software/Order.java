@@ -40,7 +40,7 @@ public class Order {
 	 * @param value the value of the coins paid by the customer
 	 */
 	public void addCoinsPaid(BigDecimal value) {
-		totalUnpaid = totalUnpaid.min(value);
+		totalUnpaid = totalUnpaid.subtract(value);
 	}
 	
 	/**
@@ -131,5 +131,14 @@ public class Order {
 			Sum = Sum.sum(iMass);	
 		}
 		return (Sum);
+	}
+
+	
+	/**
+	 * Sets total unpaid variable.
+	 * Used solely for testing due to limited scope of implementation of payment process in this iteration
+	 */
+	public void setTotalUnpaid(BigDecimal n) {
+		totalUnpaid = n;
 	}
 }

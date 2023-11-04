@@ -1,6 +1,8 @@
 package com.thelocalmarketplace.software.test;
 
 import static org.junit.Assert.*;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -75,8 +77,7 @@ public class PayCoinTests {
 		
 		payCoin.coinsFull(coinStorageStub);
 	
-		assertTrue(control.getAttendantNotified());
-		
+		Assert.assertTrue(control.getAttendantNotified() == control.notifyOtherCode);
 	}
 
 	// Test behavior when a valid coin is detected
@@ -91,12 +92,8 @@ public class PayCoinTests {
 	// Test behavior when a invalid coin is detected
 	@Test
 	public void invalidCoinDetectedTest() {
-		Boolean customerNotified = control.getCustomerNotified();
-		assertNull(control.getCustomerNotified());
 		payCoin.invalidCoinDetected(new CoinValidator (usd, denominations));
-		customerNotified = control.getCustomerNotified();
-		assertNotNull(customerNotified);
-		assertTrue(control.getCustomerNotified());
+		Assert.assertTrue(control.getCustomerNotified() == control.notifyInvalidCoinCode);
 	}
 	
 	
@@ -153,6 +150,7 @@ public class PayCoinTests {
 	// Test update payment on order when over paid
 	@Test
 	public void testUpdatePaymentOnOverPaidOrder() {
+		control.startSession();
 		order.setTotalUnpaid(BigDecimal.ZERO);
 		payCoin.updatePayment(order);
 		assertEquals(BigDecimal.ZERO, payCoin.getAmountDue());
