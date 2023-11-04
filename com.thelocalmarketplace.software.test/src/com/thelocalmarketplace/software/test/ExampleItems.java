@@ -1,5 +1,7 @@
 package com.thelocalmarketplace.software.test;
 
+import java.math.BigDecimal;
+
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.Numeral;
 import com.jjjwelectronics.scanner.Barcode;
@@ -23,6 +25,7 @@ public class ExampleItems {
 		static double expectedWeightGrams = 225;
 		static String desc = "Box of apple juice.";
 		static long price = 3;
+		static BigDecimal bdPrice = new BigDecimal((double)price);
 		static Barcode barcode = new Barcode(barcodeDigits);
 		static BarcodedItem barcodedItem = new BarcodedItem(barcode, actualMass);
 		static BarcodedProduct barcodedProduct = new BarcodedProduct(barcode, desc, price, expectedWeightGrams);
@@ -35,6 +38,7 @@ public class ExampleItems {
 		static double expectedWeightGrams = 37;
 		static String desc = "Large bag of potatoChips.";
 		static long price = 4;
+		static BigDecimal bdPrice = new BigDecimal((double)price);
 		static Barcode barcode = new Barcode(barcodeDigits);
 		static BarcodedItem barcodedItem = new BarcodedItem(barcode, actualMass);
 		static BarcodedProduct barcodedProduct = new BarcodedProduct(barcode, desc, price, expectedWeightGrams);
@@ -47,6 +51,7 @@ public class ExampleItems {
 		static double expectedWeightGrams = 289;
 		static String desc = "Jar of peanut butter.";
 		static long price = 6;
+		static BigDecimal bdPrice = new BigDecimal((double)price);
 		static Barcode barcode = new Barcode(barcodeDigits);
 		static BarcodedItem barcodedItem = new BarcodedItem(barcode, actualMass);
 		static BarcodedProduct barcodedProduct = new BarcodedProduct(barcode, desc, price, expectedWeightGrams);
