@@ -17,6 +17,7 @@ public class WeightDiscrepancy {
 	 * 			The CustomerStationControl object to be unblocked
 	 */
 	public void Unblock(CustomerStationControl Controller) {
+		status = false;
 		Controller.unblock();
 	}
 	/**
