@@ -32,8 +32,12 @@ public class Order {
 		return totalUnpaid;
 	}
 	
+	public void setTotalUnpaid(BigDecimal value) {
+		this.totalUnpaid = value;
+	}
+	
 	public void addCoinsPaid(BigDecimal value) {
-		totalUnpaid = totalUnpaid.min(value);
+		totalUnpaid = totalUnpaid.subtract(value);
 	}
 	
 	public CustomerStationControl getCustomerStationControl() {

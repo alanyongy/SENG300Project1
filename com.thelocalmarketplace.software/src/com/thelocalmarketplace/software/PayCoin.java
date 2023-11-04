@@ -91,15 +91,15 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	    return totalUnpaid;
 	}
 	
-	private void updateRemainingBalance(Order order) {
+	public void updateRemainingBalance(Order order) {
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 		customerStationControl = order.getCustomerStationControl();
 		customerStationControl.notifyCustomer(String.format("Amount due: %.2f", totalUnpaid), customerStationControl.notifyOtherCode);
 	}
 	
 	public void updatePayment(Order order) {
-		order.addCoinsPaid(amountDue);
 		amountDue = BigDecimal.ZERO;
+		order.addCoinsPaid(amountDue);
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 		
 		if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0) {
@@ -134,6 +134,10 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	public void coinInserted(CoinSlot slot) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public BigDecimal getAmountDue() {
+		return amountDue;
 	}
 	
 	
