@@ -1,3 +1,12 @@
+/**
+ * Contains information and actions which can be performed by the current order.
+ * 
+ * @author Jaden Taylor (30113034)
+ * @author Alan Yong (30105707)
+ * @author Kear Sang Heng (30087289)
+ * @author Daniel Yakimenka (10185055)
+ * @author Anandita Mahika (30097559)
+ */
 package com.thelocalmarketplace.software;
 
 import com.thelocalmarketplace.hardware.*;

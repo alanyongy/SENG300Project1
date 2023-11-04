@@ -1,7 +1,12 @@
-// Class that contains actions that can be performed by a customer station
-// Authors:
-// Jaden Taylor (30113034)
-// TODO: Add your names and if you are the last person to do so delete this comment
+/**
+ * Control structure for actions that can be performed by a customer station.
+ * 
+ * @author Jaden Taylor (30113034)
+ * @author Alan Yong (30105707)
+ * @author Kear Sang Heng (30087289)
+ * @author Daniel Yakimenka (10185055)
+ * @author Anandita Mahika (30097559)
+ */
 package com.thelocalmarketplace.software;
 
 
@@ -14,7 +19,8 @@ public class CustomerStationControl {
 	private SelfCheckoutStation station;
 
 	public Order order;
-	public Boolean blocked = false;
+	public Boolean blocked = true;
+	public Boolean sessionStarted = false;
 	private PayCoin payCoinController;
 	
 	
@@ -50,6 +56,8 @@ public class CustomerStationControl {
 		//register listener to station's barcode scanner
 		BarcodeScanListener barcodeScanListener = new BarcodeScanListener(this);
 		customerStationControl.scanner.register(barcodeScanListener);
+		
+		order = new Order(this);
 	}
 	
 	public SelfCheckoutStation getSelfCheckoutStation() {
@@ -58,6 +66,8 @@ public class CustomerStationControl {
 	
 	public void startSession() {
 		order = new Order(this);
+		sessionStarted = true;
+		unblock();
 	}
 	
 	public void pay() {
