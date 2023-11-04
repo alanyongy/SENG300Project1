@@ -19,7 +19,8 @@ public class CustomerStationControl {
 	private SelfCheckoutStation station;
 
 	public Order order;
-	public Boolean blocked = false;
+	public Boolean blocked = true;
+	public Boolean sessionStarted = false;
 	private PayCoin payCoinController;
 	
 	
@@ -54,6 +55,8 @@ public class CustomerStationControl {
 		//register listener to station's barcode scanner
 		BarcodeScanListener barcodeScanListener = new BarcodeScanListener(this);
 		customerStationControl.scanner.register(barcodeScanListener);
+		
+		order = new Order(this);
 	}
 	
 	public SelfCheckoutStation getSelfCheckoutStation() {
@@ -62,6 +65,8 @@ public class CustomerStationControl {
 	
 	public void startSession() {
 		order = new Order(this);
+		sessionStarted = true;
+		unblock();
 	}
 	
 	public void pay() {
