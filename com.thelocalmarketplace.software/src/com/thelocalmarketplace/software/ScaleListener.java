@@ -65,6 +65,7 @@ public class ScaleListener implements ElectronicScaleListener {
 	 */				
 	public ScaleListener(CustomerStationControl CSC){
 		Controller = CSC;
+		Discrepancy = new WeightDiscrepancy();
 	}
 	
 	public void theMasOnTheScaleHasExceededItsLimit(IElectronicScale scale) {}
