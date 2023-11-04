@@ -6,18 +6,43 @@ import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.Mass.MassDifference;
 import com.jjjwelectronics.scale.ElectronicScaleListener;
 import com.jjjwelectronics.scale.IElectronicScale;
-
+/**
+ * Implementation of ElectronicScaleListener. 
+ * Checks if the change in mass on the scale should result in a weight discrepancy event and trigger the event to occur when appropriate.
+ * If a WeightDiscrepancy event is active but expected mass matches the actual mass after a mass change event, the Weight Discrepancy event is stopped. 
+ */
 public class ScaleListener implements ElectronicScaleListener {
-	
+	/**
+	 * CustomerStationControl object which sends order data and can be blocked if a Weight Discrepancy occurs
+	 */
 	protected CustomerStationControl Controller; 
 	
-	protected Mass expectedMass; // Must be updated based on current cart
+	/**
+	 * Expected Mass on the scale based on items
+	 */
+	protected Mass expectedMass;
+	/**
+	 * Actual Mass on scale announced by the scale
+	 */
 	protected Mass actualMass;
+	/**
+	 * Scale sensitivity limit, differences in mass below this limit cannot be detected
+	 */
 	protected Mass sensLimit;
+	/**
+	 * Difference between actual and expected mass on scale
+	 */
 	protected MassDifference delta;
+	/**
+	 * WeightDiscrepancy object to be enabled and disabled by listener
+	 */
 	protected WeightDiscrepancy Discrepancy; 
-	protected Mass Sum;
 	
+	/**
+	 * Method called by scale when mass on it changes. Checks if the mass difference (delta) between expected and actual is higher than sensitivity.
+	 * If it is, triggers a new WeightDiscrepancyEvent to occur. Does nothing if it is already active.
+	 * If it isn't, stops an active WeightDiscrepancyEvent or does nothing if one is not active. 
+	 */
 	public void theMassOnTheScaleHasChanged(IElectronicScale scale, Mass mass){
 		actualMass = mass;
 		sensLimit = scale.getSensitivityLimit();
@@ -31,11 +56,12 @@ public class ScaleListener implements ElectronicScaleListener {
 			Discrepancy.Unblock(Controller);
 		}
 	}
-	
-	public int getStatus() {
-		return(delta.compareTo(sensLimit));	
-	}
-	
+
+	/**
+	 * Simple Constructor for ScaleListener, allows a CustomerStationControl object to which ScaleListener blocks to be specified.
+	 * @param CSC
+	 * 				CustomerStationControl object to interact with
+	 */				
 	public ScaleListener(CustomerStationControl CSC){
 		Controller = CSC;
 	}
