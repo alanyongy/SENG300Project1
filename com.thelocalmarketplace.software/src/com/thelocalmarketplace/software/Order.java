@@ -17,10 +17,9 @@ public class Order {
 	private CustomerStationControl customerStationControl;
 	private ArrayList<SessionItem> items;
 	
-	private BigDecimal total; //total price
-	private BigDecimal totalUnpaid; //total UNPAID price
-	//probably need some weight trackers too
-	
+	private BigDecimal total; //total price of order
+	private BigDecimal totalUnpaid; //total UNPAID price of order
+
 	public Order(CustomerStationControl customerStationControl) {
 		this.customerStationControl = customerStationControl;
 		items = new ArrayList<SessionItem>();
@@ -28,22 +27,43 @@ public class Order {
 		totalUnpaid = new BigDecimal(0);
 	}
 
+	/**
+	 * 
+	 * @return the total unpaid amount of the order
+	 */
 	public BigDecimal getTotalUnpaid() {
 		return totalUnpaid;
 	}
 	
+	/**
+	 * Subtracts the amount paid by the customer from the total unpaid amount for the order
+	 * @param value the value of the coins paid by the customer
+	 */
 	public void addCoinsPaid(BigDecimal value) {
 		totalUnpaid = totalUnpaid.min(value);
 	}
 	
+	/**
+	 * 
+	 * @return the control class for the customer station that checks for payment, adds items,
+	 * and weight discrepancy of the items in the bagging area
+	 */
 	public CustomerStationControl getCustomerStationControl() {
 		return customerStationControl;
 	}
 	
+	/**
+	 * 
+	 * @return the list of items in the order
+	 */
 	public ArrayList<SessionItem> getItems() {
 		return items;
 	}
 	
+	/**
+	 * 
+	 * @return the calculated total price of the order 
+	 */
 	public BigDecimal getTotal() {
 		return total;
 	}
@@ -51,7 +71,7 @@ public class Order {
 	/**
 	 * Adds an product with a barcode to the order list as a new item with 
 	 * it's mass assigned to the expected weight of the product.
-	 * @param barcode
+	 * @param barcode the barcode of the added item
 	 */
 	public void add(Barcode barcode) {
 		if(preconditionsMet(barcode)) {
@@ -79,14 +99,14 @@ public class Order {
 	 * Adds an item to the order list by PLU code.
 	 * Only used to show code structure in overloading the add method 
 	 * to support the various ways of adding an item to the order list.
-	 * @param plu 
+	 * @param plu the plu of the item adding to order
 	 */
 	public void add(PriceLookUpCode plu) {}
 	
 	
 	/**Checks if the preconditions are met for adding a barcode product to the order list.
 	 * @param barcode
-	 * @return
+	 * @return boolean that tracks whether adding items and payment is blocked at the station
 	 */
 	public boolean preconditionsMet(Barcode barcode) {
 		return !customerStationControl.blocked;
@@ -95,8 +115,8 @@ public class Order {
 	/**Checks if the preconditions are met for adding a PLU product to the order list.
 	 * Only used to show code structure in overloading the preconditionsMet method
 	 * to support differing preconditions for the various ways of adding an item to the order list.
-	 * @param plu
-	 * @return
+	 * @param plu the plus of the item adding to oder
+	 * @return the expected mass of the order
 	 */
 	public boolean preconditionsMet(PriceLookUpCode plu) {return false;}
 	
