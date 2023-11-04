@@ -10,7 +10,6 @@
 package com.thelocalmarketplace.software;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 
 import com.tdc.IComponent;
 import com.tdc.IComponentObserver;
@@ -173,9 +172,10 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 		
 		if (totalUnpaid.compareTo(BigDecimal.ZERO) == 0) {
 			fullPaid();
-		} else if (totalUnpaid.compareTo(BigDecimal.ZERO) < 0) {
-			fullPaid(); //where change would be implemented
-		}
+		} 
+//		else if (totalUnpaid.compareTo(BigDecimal.ZERO) < 0) {
+//			//where change would be implemented
+//		}
 		
 	}
 		
@@ -205,8 +205,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 
 	@Override
 	public void coinInserted(CoinSlot slot) {
-		// not used in this iteration
-		
+		// not used in this iteration	
 	}
 	
 	/**

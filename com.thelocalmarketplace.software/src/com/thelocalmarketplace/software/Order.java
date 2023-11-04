@@ -11,10 +11,6 @@ package com.thelocalmarketplace.software;
 
 import com.thelocalmarketplace.hardware.*;
 import com.thelocalmarketplace.hardware.external.ProductDatabases;
-
-import ca.ucalgary.seng300.simulation.SimulationException;
-
-import com.jjjwelectronics.Item;
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.scanner.Barcode;
 
@@ -118,7 +114,7 @@ public class Order {
 	 * @return boolean that tracks whether adding items and payment is blocked at the station
 	 */
 	public boolean preconditionsMet(Barcode barcode) {
-		return !customerStationControl.blocked;
+		return !customerStationControl.isBlocked();
 	}
 	
 	/**Checks if the preconditions are met for adding a PLU product to the order list.

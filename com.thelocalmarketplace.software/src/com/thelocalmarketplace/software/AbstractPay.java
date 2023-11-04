@@ -10,9 +10,6 @@
 package com.thelocalmarketplace.software;
 
 import java.math.BigDecimal;
-import java.util.Currency;
-
-import com.tdc.*;
 import com.tdc.coin.*;
 
 //abstract class for all coin payment methods
