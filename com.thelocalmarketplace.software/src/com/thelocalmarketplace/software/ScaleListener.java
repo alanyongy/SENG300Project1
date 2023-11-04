@@ -58,7 +58,7 @@ public class ScaleListener implements ElectronicScaleListener {
 		
 		} 
 		else if (delta.compareTo(sensLimit) != 1 && Controller.blocked == true) {
-			Discrepancy.Unblock(Controller);
+			Controller.unblock();
 		}
 	}
 
