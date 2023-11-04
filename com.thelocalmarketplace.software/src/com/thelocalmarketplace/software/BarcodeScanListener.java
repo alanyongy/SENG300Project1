@@ -43,6 +43,10 @@ public class BarcodeScanListener implements BarcodeScannerListener{
 
 	@Override
 	public void aBarcodeHasBeenScanned(IBarcodeScanner barcodeScanner, Barcode barcode) {
+		if (!customerStationControl.sessionStarted) {
+			return;
+		}
+		
 		customerStationControl.order.add(barcode);
 	}
 	
