@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import com.jjjwelectronics.Mass;
@@ -53,5 +54,33 @@ public class AddItemTests {
 		assertFalse(control.blocked);
 		station.scanner.scan(ExampleItems.PeanutButter.barcodedItem);
 		assertTrue(control.blocked);
+	}
+	
+	@Test
+	public void totalPriceUpdatedCorrectly() {
+		BigDecimal expectedTotal = new BigDecimal(0);
+		assertEquals(expectedTotal, control.order.getTotal());
+		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
+		expectedTotal = expectedTotal.add(ExampleItems.AppleJuice.bdPrice);
+		assertEquals(expectedTotal, control.order.getTotal());
+	}
+	
+	@Test
+	public void totalUnpaidPriceUpdatedCorrectly() {
+		BigDecimal expectedUnpaid = new BigDecimal(0);
+		assertEquals(expectedUnpaid, control.order.getTotalUnpaid());
+		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
+		expectedUnpaid = expectedUnpaid.add(ExampleItems.AppleJuice.bdPrice);
+		assertEquals(expectedUnpaid, control.order.getTotalUnpaid());
+	}
+	
+	@Test
+	public void systemUnblocked() {
+		assertFalse(control.blocked);
+		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
+		assertTrue(control.blocked);
+		station.baggingArea.addAnItem(ExampleItems.AppleJuice.barcodedItem);
+		assertFalse(control.blocked);
+		
 	}
 }
