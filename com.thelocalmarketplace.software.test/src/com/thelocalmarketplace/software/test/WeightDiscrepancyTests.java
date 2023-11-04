@@ -21,6 +21,7 @@ public class WeightDiscrepancyTests {
 		// initialize station and turn on required components
 		station = new SelfCheckoutStation();
 		station.plugIn(PowerGrid.instance());
+		PowerGrid.engageUninterruptiblePowerSource();
 		station.baggingArea.turnOn();
 		station.scanner.turnOn();
 		
@@ -33,14 +34,27 @@ public class WeightDiscrepancyTests {
 	}
 	
 	/**
-	 * After fixing a discrepancy, the station is unblocked.
+	 * After fixing a discrepancy by adding the correct item, the station is unblocked.
 	 */
 	@Test
-	public void correctDiscrepancy() {
+	public void correctDiscrepancyByAddingItem() {
 		createDiscrepancyByRemoving(ExampleItems.PotatoChips.barcodedItem);
 		station.baggingArea.addAnItem(ExampleItems.PotatoChips.barcodedItem);
 		Assert.assertTrue(!control.isBlocked());
 	}
+	
+	/**
+	 * After fixing a discrepancy by removing incorrect item, the station is unblocked.
+	 */
+	@Test
+	public void correctDiscrepancyByRemovingItem() {
+		station.scanner.scan(ExampleItems.PotatoChips.barcodedItem);
+		station.baggingArea.addAnItem(ExampleItems.PotatoChips.barcodedItem);
+		station.baggingArea.addAnItem(ExampleItems.AppleJuice.barcodedItem);
+		station.baggingArea.removeAnItem(ExampleItems.AppleJuice.barcodedItem);
+		Assert.assertTrue(!control.isBlocked());
+	}
+	
 	
 	/**
 	 * The station is blocked after adding the wrong item to the bagging area.
