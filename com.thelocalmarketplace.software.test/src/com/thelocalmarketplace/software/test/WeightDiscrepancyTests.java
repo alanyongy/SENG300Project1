@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jjjwelectronics.Mass;
+import com.jjjwelectronics.OverloadedDevice;
 import com.thelocalmarketplace.hardware.SelfCheckoutStation;
 import com.thelocalmarketplace.software.CustomerStationControl;
 import com.thelocalmarketplace.software.SessionItem;
@@ -48,7 +49,7 @@ public class WeightDiscrepancyTests {
 	@Test
 	public void discrepancyCustomerNotified() {
 		createDiscrepancy();
-		Assert.assertTrue(control.customerNotified == control.notifyDiscrepancyCode);
+		Assert.assertEquals(control.customerNotified, control.notifyDiscrepancyCode);
 	}
 	
 	/**
@@ -77,5 +78,4 @@ public class WeightDiscrepancyTests {
 		station.baggingArea.addAnItem(ExampleItems.PotatoChips.barcodedItem);
 		station.baggingArea.removeAnItem(ExampleItems.PotatoChips.barcodedItem);
 	}
-
 }

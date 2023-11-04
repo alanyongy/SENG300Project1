@@ -1,5 +1,7 @@
 package com.thelocalmarketplace.software;
 
+import java.util.ResourceBundle.Control;
+
 import com.jjjwelectronics.IDevice;
 import com.jjjwelectronics.IDeviceListener;
 import com.jjjwelectronics.Mass;
@@ -32,7 +34,7 @@ public class ScaleListener implements ElectronicScaleListener {
 	/**
 	 * Difference between actual and expected mass on scale
 	 */
-	protected MassDifference delta;
+	protected Mass delta;
 	/**
 	 * WeightDiscrepancy object to be enabled and disabled by listener
 	 */
@@ -48,8 +50,9 @@ public class ScaleListener implements ElectronicScaleListener {
 		actualMass = mass;
 		sensLimit = scale.getSensitivityLimit();
 		expectedMass = Controller.order.getExpectedMass();
-		delta = actualMass.difference(expectedMass);
-		
+		delta = actualMass.difference(expectedMass).abs();
+
+
 		// Address Scenario: New weight added to the scale that causes expected mass to differ from actual mass
 		if (delta.compareTo(sensLimit) == 1 && Discrepancy.checkStatus() == false) {
 			Discrepancy.WeightDiscrepancyEvent(Controller);}
@@ -64,6 +67,13 @@ public class ScaleListener implements ElectronicScaleListener {
 		// If all these scenarios are false that means that either: Discrepancy is active and the latest mass change did not make
 		// expected weight match actual weight. OR Discrepancy is inactive,the added weight caused the expected mass to match actual mass, and the
 		// controller is not blocked. (I dont think this is ever true)
+		
+		System.out.println("delta: " + delta);
+		System.out.println("Expected mass: " + expectedMass);
+		System.out.println("Actual mass on scale:" + actualMass);
+		System.out.println("delta.compareTo(sensLimit):" + delta.compareTo(sensLimit));
+		System.out.println("blocked: " + Controller.blocked);
+		System.out.println("sens limit: " + sensLimit);
 	}
 
 	/**
@@ -109,10 +119,4 @@ public class ScaleListener implements ElectronicScaleListener {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	
-
-	
-	
 }
