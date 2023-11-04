@@ -30,11 +30,6 @@ public class CustomerStationControl {
 	 *Possible values: discrepancy, insertPayment, placeItemInBaggingArea 
 	 */
 	public String customerNotified = "";
-
-	
-	
-	private Boolean customerNotified;
-	private Boolean attendantNotified;
 	private String lastNotification;
 	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
@@ -87,11 +82,11 @@ public class CustomerStationControl {
 	 * method that adds BarcodedProduct to order -  probably calls add method from order 
 	 */
 	
-	public Boolean getCustomerNotified() {
+	public String getCustomerNotified() {
 	    return customerNotified;
 	}
 	
-	public Boolean getAttendantNotified() {
+	public String getAttendantNotified() {
 	    return attendantNotified;
 	}
 	
