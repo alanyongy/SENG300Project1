@@ -14,8 +14,7 @@ public class CustomerStationControl {
 	private SelfCheckoutStation station;
 
 	public Order order;
-	public Boolean blocked = true;
-	public Boolean sessionStarted = false;
+	public Boolean blocked = false;
 	private PayCoin payCoinController;
 	
 	
@@ -34,6 +33,10 @@ public class CustomerStationControl {
 
 	
 	
+	private Boolean customerNotified;
+	private Boolean attendantNotified;
+	private String lastNotification;
+	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
 		this.station = customerStationControl;
 		
@@ -51,8 +54,6 @@ public class CustomerStationControl {
 		//register listener to station's barcode scanner
 		BarcodeScanListener barcodeScanListener = new BarcodeScanListener(this);
 		customerStationControl.scanner.register(barcodeScanListener);
-		
-		order = new Order(this);
 	}
 	
 	public SelfCheckoutStation getSelfCheckoutStation() {
@@ -61,21 +62,17 @@ public class CustomerStationControl {
 	
 	public void startSession() {
 		order = new Order(this);
-		sessionStarted = true;
-		unblock();
 	}
 	
 	public void pay() {
 		payCoinController.pay(order);
 	}
 	
-	//displays message to attendant
 	public void notifyAttendant(String message, String code) {
 		System.out.println("Attendant: " + message);
 		attendantNotified = code;
 	}
 	
-	//displays message to customer
 	public void notifyCustomer(String message, String code) {
 		System.out.println("Customer: " + message);
 		customerNotified = code;
@@ -89,7 +86,18 @@ public class CustomerStationControl {
 	 * method that calls notifyCustomer to scan next item
 	 * method that adds BarcodedProduct to order -  probably calls add method from order 
 	 */
-
+	
+	public Boolean getCustomerNotified() {
+	    return customerNotified;
+	}
+	
+	public Boolean getAttendantNotified() {
+	    return attendantNotified;
+	}
+	
+	public String getLastNotification() {
+		return lastNotification;
+	}
 	
 	public void block() {
 		blocked = true;
