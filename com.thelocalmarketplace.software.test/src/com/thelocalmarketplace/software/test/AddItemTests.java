@@ -26,9 +26,8 @@ public class AddItemTests {
 		station.baggingArea.turnOn();
 		station.scanner.turnOn();
 		
-		// Initialize control and start the session
+		// Initialize control
 		control = new CustomerStationControl(station);
-		control.startSession();
 		
 		// Initialize database
 		ExampleItems.updateDatabase();
@@ -39,6 +38,7 @@ public class AddItemTests {
 	 */
 	@Test
 	public void itemAddedWhenScanned() {
+		control.startSession();
 		ArrayList<SessionItem> items = control.order.getItems();
 		
 		// Add an item and check if the size increases
@@ -57,6 +57,7 @@ public class AddItemTests {
 	 */
 	@Test
 	public void systemBlockedWhenAdded() {
+		control.startSession();
 		ArrayList<SessionItem> items = control.order.getItems();
 		
 		// Scan an item
@@ -75,6 +76,7 @@ public class AddItemTests {
 	 */
 	@Test
 	public void totalPriceUpdatedCorrectly() {
+		control.startSession();
 		BigDecimal expectedTotal = new BigDecimal(0);
 		assertEquals(expectedTotal, control.order.getTotal());
 		// Scan an item and check if the price is updated
@@ -88,6 +90,7 @@ public class AddItemTests {
 	 */
 	@Test
 	public void totalUnpaidPriceUpdatedCorrectly() {
+		control.startSession();
 		BigDecimal expectedUnpaid = new BigDecimal(0);
 		assertEquals(expectedUnpaid, control.order.getTotalUnpaid());
 		// Scan an item and check if the price is updated
@@ -101,6 +104,7 @@ public class AddItemTests {
 	 */
 	@Test
 	public void systemUnblocked() {
+		control.startSession();
 		// Scan an item
 		assertFalse(control.blocked);
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
@@ -116,8 +120,21 @@ public class AddItemTests {
 	 */
 	@Test
 	public void notifiesCustomerToBagItem() {
+		control.startSession();
 		assertEquals(control.customerNotified, "");
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
 		assertEquals(control.customerNotified, control.notifyPlaceItemInBaggingAreaCode);
+	}
+	
+	@Test
+	public void itemAddedWhileSessionIsNotStarted() {
+		ArrayList<SessionItem> items = control.order.getItems();
+		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
+		assertEquals(0, items.size());
+		control.startSession();
+		items = control.order.getItems();
+		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
+		assertEquals(1, items.size());
+		
 	}
 }
