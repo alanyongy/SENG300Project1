@@ -126,11 +126,16 @@ public class AddItemTests {
 		assertEquals(control.customerNotified, control.notifyPlaceItemInBaggingAreaCode);
 	}
 	
+	/**
+	 * Makes sure an item is ignored when it is scanned and the session is not started
+	 */
 	@Test
 	public void itemAddedWhileSessionIsNotStarted() {
+		// Scan item before starting session, should be no items in the order list
 		ArrayList<SessionItem> items = control.order.getItems();
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
 		assertEquals(0, items.size());
+		// Start session and scan an item again, should now have 1 item in the order list
 		control.startSession();
 		items = control.order.getItems();
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
