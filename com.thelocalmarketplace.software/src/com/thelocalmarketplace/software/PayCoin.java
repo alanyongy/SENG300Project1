@@ -136,6 +136,10 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 		
 	}
 	
+	public BigDecimal getAmountDue() {
+		return amountDue;
+	}
+	
 	
 
 }
