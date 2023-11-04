@@ -1,3 +1,12 @@
+/**
+ * Contains tests to ensure an item is being added to the order correctly.
+ * 
+ * @author Jaden Taylor (30113034)
+ * @author Alan Yong (30105707)
+ * @author Kear Sang Heng (30087289)
+ * @author Daniel Yakimenka (10185055)
+ * @author Anandita Mahika (30097559)
+ */
 package com.thelocalmarketplace.software.test;
 
 import static org.junit.Assert.*;
