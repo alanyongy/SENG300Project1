@@ -2,6 +2,9 @@ package com.thelocalmarketplace.software;
 
 import com.thelocalmarketplace.hardware.*;
 import com.thelocalmarketplace.hardware.external.ProductDatabases;
+
+import ca.ucalgary.seng300.simulation.SimulationException;
+
 import com.jjjwelectronics.Item;
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.scanner.Barcode;
@@ -76,6 +79,19 @@ public class Order {
 		//preconditions for adding an item by PLU.
 		//implemented only to show code structure.	
 		return false;
+	}
+	
+	/**
+	 * Gets the expected mass of the order
+	 **/
+	public Mass getExpectedMass() {
+		Mass Sum = new Mass(0);
+		for (SessionItem i : items) {
+			Mass iMass = i.getMass();
+			
+			Sum = Sum.sum(iMass);	
+		}
+		return (Sum);
 	}
 
 }
