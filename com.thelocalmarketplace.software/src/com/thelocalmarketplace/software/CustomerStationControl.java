@@ -22,6 +22,7 @@ public class CustomerStationControl {
 		this.station = customerStationControl;
 		
 		//have to initialize weight dicrepency and add item controllers too (same way)
+		// DY: I made a constructor to initialize a ScaleListener object. Implement below
 		
 		
 		//initialize PayCoin control
