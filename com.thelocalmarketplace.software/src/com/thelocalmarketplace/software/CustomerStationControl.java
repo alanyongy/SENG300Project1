@@ -12,18 +12,21 @@ import com.tdc.coin.*;
 public class CustomerStationControl {
 	
 	private SelfCheckoutStation station;
-	
-	private PayCoin payCoinController;
+
 	public Order order;
 	public Boolean blocked = false;
-	public ScaleListener scaleListener; //TODO needs to be set
+	private PayCoin payCoinController;
+	
+	//Used for testing as signaling UI will not be implemented in this iteration
+	public boolean attendantNotified = false;
+	public boolean customerNotified = false;
 	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
 		this.station = customerStationControl;
 		
 		//have to initialize weight dicrepency and add item controllers too (same way)
 		// DY: I made a constructor to initialize a ScaleListener object. Also registered it to the scale thats part of the station. Implement:
-		scaleListener = new ScaleListener(this);
+		ScaleListener scaleListener = new ScaleListener(this);
 		customerStationControl.baggingArea.register(scaleListener);
 		// DY: end
 		
@@ -52,11 +55,13 @@ public class CustomerStationControl {
 	//displays message to attendant
 	public void notifyAttendant(String message) {
 		System.out.println("Attendant: " + message);
+		attendantNotified = true;
 	}
 	
 	//displays message to customer
 	public void notifyCustomer(String message) {
 		System.out.println("Customer: " + message);
+		customerNotified = true;
 	}
 	
 	public Order getOrder() {
@@ -75,6 +80,10 @@ public class CustomerStationControl {
 	
 	public void unblock() {
 		blocked = false;
+	}
+	
+	public Boolean isBlocked() {
+		return blocked;
 	}
 }
 

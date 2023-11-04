@@ -44,6 +44,7 @@ public class ScaleListener implements ElectronicScaleListener {
 	 * If it isn't, stops an active WeightDiscrepancyEvent or does nothing if one is not active. 
 	 */
 	public void theMassOnTheScaleHasChanged(IElectronicScale scale, Mass mass){
+		Discrepancy = new WeightDiscrepancy();
 		actualMass = mass;
 		sensLimit = scale.getSensitivityLimit();
 		expectedMass = Controller.order.getExpectedMass();
@@ -54,7 +55,7 @@ public class ScaleListener implements ElectronicScaleListener {
 		
 		else if (delta.compareTo(sensLimit) != 1 && Discrepancy.checkStatus() == true) {
 			Discrepancy.Unblock(Controller);
-		}
+		} 
 	}
 
 	/**

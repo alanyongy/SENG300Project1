@@ -88,7 +88,7 @@ public class Order {
 	 * @return
 	 */
 	public boolean preconditionsMet(Barcode barcode) {
-		return customerStationControl.blocked;
+		return !customerStationControl.blocked;
 	}
 	
 	/**Checks if the preconditions are met for adding a PLU product to the order list.

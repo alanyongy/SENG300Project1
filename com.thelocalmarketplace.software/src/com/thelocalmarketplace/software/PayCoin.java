@@ -46,7 +46,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	public void coinsFull(CoinStorageUnit unit) {
 		coinAdded(unit);
 		customerStationControl.notifyAttendant("Coin Storage Full");
-		
+
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	public BigDecimal pay(Order order) {
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 	    
-	    if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0) {
+	    if (totalUnpaid.compareTo(BigDecimal.ZERO) > 0 && !customerStationControl.isBlocked()) {
 	        updateRemainingBalance(order);
 	        customerStationControl.notifyCustomer("Please insert your payment");
 	    } 
