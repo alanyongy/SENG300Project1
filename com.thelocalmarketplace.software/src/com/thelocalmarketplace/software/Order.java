@@ -47,7 +47,7 @@ public class Order {
 	public BigDecimal getTotal() {
 		return total;
 	}
-	
+
 	/**
 	 * Adds an product with a barcode to the order list as a new item with 
 	 * it's mass assigned to the expected weight of the product.
@@ -68,7 +68,8 @@ public class Order {
 			total = total.add(new BigDecimal(itemProduct.getPrice()));
 			totalUnpaid = totalUnpaid.add(new BigDecimal(itemProduct.getPrice()));
 			
-			customerStationControl.notifyCustomer("Place the scanned item in the bagging area");
+			customerStationControl.notifyCustomer("Place the scanned item in the bagging area", 
+					customerStationControl.notifyPlaceItemInBaggingAreaCode);
 			
 			//the customer station is unblocked following a non-discrepancy creating weight change from the scale listener
 		}
