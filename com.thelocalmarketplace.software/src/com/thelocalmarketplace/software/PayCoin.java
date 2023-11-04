@@ -91,7 +91,7 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	    return totalUnpaid;
 	}
 	
-	private void updateRemainingBalance(Order order) {
+	public void updateRemainingBalance(Order order) {
 		BigDecimal totalUnpaid = order.getTotalUnpaid();
 		customerStationControl = order.getCustomerStationControl();
 		customerStationControl.notifyCustomer(String.format("Amount due: %.2f", totalUnpaid));

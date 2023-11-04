@@ -20,6 +20,7 @@ public class CustomerStationControl {
 	
 	private Boolean customerNotified;
 	private Boolean attendantNotified;
+	private String lastNotification;
 	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
 		this.station = customerStationControl;
@@ -55,12 +56,14 @@ public class CustomerStationControl {
 	//displays message to attendant
 	public void notifyAttendant(String message) {
 		attendantNotified = true;
+		lastNotification = "Attendant: " + message;
 		System.out.println("Attendant: " + message);
 	}
 	
 	//displays message to customer
 	public void notifyCustomer(String message) {
 		customerNotified = true; 
+		lastNotification = "Customer: " + message;
 		System.out.println("Customer: " + message);
 	}
 	
@@ -79,6 +82,10 @@ public class CustomerStationControl {
 	
 	public Boolean getAttendantNotified() {
 	    return attendantNotified;
+	}
+	
+	public String getLastNotification() {
+		return lastNotification;
 	}
 	
 	public void block() {
