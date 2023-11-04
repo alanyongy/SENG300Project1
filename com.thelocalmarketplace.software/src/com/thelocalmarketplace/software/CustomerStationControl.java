@@ -12,11 +12,26 @@ import com.tdc.coin.*;
 public class CustomerStationControl {
 	
 	private SelfCheckoutStation station;
-	
-	private PayCoin payCoinController;
+
 	public Order order;
 	public Boolean blocked = false;
-	public ScaleListener scaleListener; //TODO needs to be set
+	private PayCoin payCoinController;
+	
+	
+	public String notifyDiscrepancyCode =  "discrepancy";
+	public String notifyInsertPaymentCode =  "insertPayment";
+	public String notifyPlaceItemInBaggingAreaCode =  "placeItemInBaggingArea";
+	public String notifyOtherCode =  "other";
+	/**Used for testing as signaling UI will not be implemented in this iteration.
+	 *Possible values: discrepancy, insertPayment, placeItemInBaggingArea 
+	 */
+	public String attendantNotified = "";
+	/**Used for testing as signaling UI will not be implemented in this iteration.
+	 *Possible values: discrepancy, insertPayment, placeItemInBaggingArea 
+	 */
+	public String customerNotified = "";
+
+	
 	
 	private Boolean customerNotified;
 	private Boolean attendantNotified;
@@ -27,7 +42,7 @@ public class CustomerStationControl {
 		
 		//have to initialize weight dicrepency and add item controllers too (same way)
 		// DY: I made a constructor to initialize a ScaleListener object. Also registered it to the scale thats part of the station. Implement:
-		scaleListener = new ScaleListener(this);
+		ScaleListener scaleListener = new ScaleListener(this);
 		customerStationControl.baggingArea.register(scaleListener);
 		// DY: end
 		
@@ -53,18 +68,14 @@ public class CustomerStationControl {
 		payCoinController.pay(order);
 	}
 	
-	//displays message to attendant
-	public void notifyAttendant(String message) {
-		attendantNotified = true;
-		lastNotification = "Attendant: " + message;
+	public void notifyAttendant(String message, String code) {
 		System.out.println("Attendant: " + message);
+		attendantNotified = code;
 	}
 	
-	//displays message to customer
-	public void notifyCustomer(String message) {
-		customerNotified = true; 
-		lastNotification = "Customer: " + message;
+	public void notifyCustomer(String message, String code) {
 		System.out.println("Customer: " + message);
+		customerNotified = code;
 	}
 	
 	public Order getOrder() {
@@ -94,6 +105,10 @@ public class CustomerStationControl {
 	
 	public void unblock() {
 		blocked = false;
+	}
+	
+	public Boolean isBlocked() {
+		return blocked;
 	}
 }
 
