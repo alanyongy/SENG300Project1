@@ -2,6 +2,9 @@ package com.thelocalmarketplace.software;
 
 import com.thelocalmarketplace.hardware.*;
 import com.thelocalmarketplace.hardware.external.ProductDatabases;
+
+import ca.ucalgary.seng300.simulation.SimulationException;
+
 import com.jjjwelectronics.Item;
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.scanner.Barcode;
@@ -85,10 +88,8 @@ public class Order {
 	 * @return
 	 */
 	public boolean preconditionsMet(Barcode barcode) {
-		if(customerStationControl.blocked) return true;
-		return false;
+		return customerStationControl.blocked;
 	}
-	
 	
 	/**Checks if the preconditions are met for adding a PLU product to the order list.
 	 * Only used to show code structure in overloading the preconditionsMet method
@@ -97,5 +98,17 @@ public class Order {
 	 * @return
 	 */
 	public boolean preconditionsMet(PriceLookUpCode plu) {return false;}
-
+	
+	/**
+	 * Gets the expected mass of the order
+	 **/
+	public Mass getExpectedMass() {
+		Mass Sum = new Mass(0);
+		for (SessionItem i : items) {
+			Mass iMass = i.getMass();
+			
+			Sum = Sum.sum(iMass);	
+		}
+		return (Sum);
+	}
 }
