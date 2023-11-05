@@ -45,25 +45,21 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	@Override
 	public void enabled(IComponent<? extends IComponentObserver> component) {
 		// Not used in current implementation.
-		
 	}
 
 	@Override
 	public void disabled(IComponent<? extends IComponentObserver> component) {
 		// Not used in current implementation.
-		
 	}
 
 	@Override
 	public void turnedOn(IComponent<? extends IComponentObserver> component) {
 		// Not used in current implementation.
-		
 	}
 
 	@Override
 	public void turnedOff(IComponent<? extends IComponentObserver> component) {
 		// Not used in current implementation.
-		
 	}
 
 	/**
@@ -76,7 +72,6 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	public void coinsFull(CoinStorageUnit unit) {
 		coinAdded(unit);
 		customerStationControl.notifyAttendant("Coin Storage Full", customerStationControl.notifyOtherCode);
-
 	}
 
 	/**
@@ -89,19 +84,16 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	public void coinAdded(CoinStorageUnit unit) {
 		Order order = customerStationControl.getOrder();
 		updatePayment(order);
-		
 	}
 
 	@Override
 	public void coinsLoaded(CoinStorageUnit unit) {
 		// not used in this iteration
-		
 	}
 
 	@Override
 	public void coinsUnloaded(CoinStorageUnit unit) {
 		// not used in this iteration
-		
 	}
 
 	/**
@@ -113,7 +105,6 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	@Override
 	public void validCoinDetected(CoinValidator validator, BigDecimal value) {
 		processPayment(validator, value);
-		
 	}
 
 	/**
@@ -125,7 +116,6 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	@Override
 	public void invalidCoinDetected(CoinValidator validator) {
 		customerStationControl.notifyCustomer("Please insert a valid coin", customerStationControl.notifyInvalidCoinCode);
-		
 	}
 
 	/**
@@ -173,10 +163,8 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 //		else if (totalUnpaid.compareTo(BigDecimal.ZERO) < 0) {
 //			//where change would be implemented
 //		}
-		
 	}
 		
-
 	/**
 	 * After detecting the inserted coins, the updating payment process will be called to set the 
 	 * amountDue for the order. The paid amount is then subtracted from the order total when the 
@@ -196,13 +184,11 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	@Override
 	public void fullPaid() {
 		amountDue = BigDecimal.ZERO;
-		
-		
 	}
 
 	@Override
 	public void coinInserted(CoinSlot slot) {
-		// not used in this iteration	
+		// Not used in current implementation.	
 	}
 	
 	/**
@@ -212,7 +198,4 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	public BigDecimal getAmountDue() {
 		return amountDue; 
 	}
-	
-	
-
 }
