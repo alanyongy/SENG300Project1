@@ -56,7 +56,7 @@ public class ScaleListener implements ElectronicScaleListener {
 
 		actualMass = mass;
 		sensLimit = scale.getSensitivityLimit();
-		expectedMass = Controller.order.getExpectedMass();
+		expectedMass = Controller.getOrder().getExpectedMass();
 		delta = actualMass.difference(expectedMass).abs();
 
 		// Address Scenario: New weight added to the scale that causes expected mass to differ from actual mass
@@ -67,7 +67,7 @@ public class ScaleListener implements ElectronicScaleListener {
 			Discrepancy.Unblock(Controller);
 		} 
 		// Address Scenario: New weight added causes the expected mass to match the actual mass, resolving block in controller caused by add in order class
-		else if (delta.compareTo(sensLimit) != 1 && Controller.blocked == true) {
+		else if (delta.compareTo(sensLimit) != 1 && Controller.isBlocked() == true) {
 			Controller.unblock();
 		}
 		// If all these scenarios are false that means that either: Discrepancy is active and the latest mass change did not make

@@ -53,10 +53,10 @@ public class BarcodeScanListener implements BarcodeScannerListener{
 	@Override
 	public void aBarcodeHasBeenScanned(IBarcodeScanner barcodeScanner, Barcode barcode) {
 		// Silently ignores scan if a session has not been started
-		if (!customerStationControl.sessionStarted) {
+		if (!customerStationControl.getSessionStarted()) {
 			return;
 		}
 		
-		customerStationControl.order.add(barcode);
+		customerStationControl.getOrder().add(barcode);
 	}
 }

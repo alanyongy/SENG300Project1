@@ -11,12 +11,9 @@ package com.thelocalmarketplace.software.test;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jjjwelectronics.Item;
 import com.jjjwelectronics.scanner.BarcodedItem;
 import com.thelocalmarketplace.hardware.SelfCheckoutStation;
 import com.thelocalmarketplace.software.CustomerStationControl;
-
-import ca.ucalgary.seng300.simulation.SimulationException;
 
 import org.junit.Assert;
 import powerutility.PowerGrid;
@@ -104,7 +101,7 @@ public class WeightDiscrepancyTests {
 	@Test
 	public void discrepancyAttendantNotified() {
 		createDiscrepancyByRemoving(ExampleItems.PotatoChips.barcodedItem);
-		Assert.assertEquals(control.attendantNotified, control.notifyDiscrepancyCode);
+		Assert.assertEquals(control.getAttendantNotified(), control.notifyDiscrepancyCode);
 	}
 	
 	/**
@@ -114,7 +111,7 @@ public class WeightDiscrepancyTests {
 	@Test
 	public void discrepancyCustomerNotified() {
 		createDiscrepancyByRemoving(ExampleItems.PotatoChips.barcodedItem);
-		Assert.assertEquals(control.customerNotified, control.notifyDiscrepancyCode);
+		Assert.assertEquals(control.getCustomerNotified(), control.notifyDiscrepancyCode);
 	}
 	
 	/**
@@ -136,7 +133,7 @@ public class WeightDiscrepancyTests {
 	public void discrepancyPay() {
 		createDiscrepancyByRemoving(ExampleItems.PotatoChips.barcodedItem);
 		control.pay();
-		Assert.assertFalse(control.customerNotified == control.notifyInsertPaymentCode);
+		Assert.assertFalse(control.getCustomerNotified() == control.notifyInsertPaymentCode);
 	}
 	
 	/**

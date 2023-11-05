@@ -13,14 +13,12 @@ package com.thelocalmarketplace.software;
 import com.thelocalmarketplace.hardware.*;
 
 public class CustomerStationControl {
-	
 	private SelfCheckoutStation station;
 
-	public Order order;
-	public Boolean blocked = true;
-	public Boolean sessionStarted = false;
+	private Order order;
+	private Boolean blocked = true;
+	private Boolean sessionStarted = false;
 	private PayCoin payCoinController;
-	
 	
 	public String notifyDiscrepancyCode =  "discrepancy";
 	public String notifyInsertPaymentCode =  "insertPayment";
@@ -30,11 +28,11 @@ public class CustomerStationControl {
 	/**Used for testing as signaling UI will not be implemented in this iteration.
 	 *Possible values: discrepancy, insertPayment, placeItemInBaggingArea 
 	 */
-	public String attendantNotified = "";
+	private String attendantNotified = "";
 	/**Used for testing as signaling UI will not be implemented in this iteration.
 	 *Possible values: discrepancy, insertPayment, placeItemInBaggingArea 
 	 */
-	public String customerNotified = "";
+	private String customerNotified = "";
 	private String lastNotification;
 	
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
@@ -144,6 +142,55 @@ public class CustomerStationControl {
 	 */
 	public Boolean isBlocked() {
 		return blocked;
+	}
+	
+	
+	public SelfCheckoutStation getStation() {
+		return station;
+	}
+
+	public void setStation(SelfCheckoutStation station) {
+		this.station = station;
+	}
+
+	public Boolean getBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(Boolean blocked) {
+		this.blocked = blocked;
+	}
+
+	public Boolean getSessionStarted() {
+		return sessionStarted;
+	}
+
+	public void setSessionStarted(Boolean sessionStarted) {
+		this.sessionStarted = sessionStarted;
+	}
+
+	public PayCoin getPayCoinController() {
+		return payCoinController;
+	}
+
+	public void setPayCoinController(PayCoin payCoinController) {
+		this.payCoinController = payCoinController;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public void setAttendantNotified(String attendantNotified) {
+		this.attendantNotified = attendantNotified;
+	}
+
+	public void setCustomerNotified(String customerNotified) {
+		this.customerNotified = customerNotified;
+	}
+
+	public void setLastNotification(String lastNotification) {
+		this.lastNotification = lastNotification;
 	}
 }
 

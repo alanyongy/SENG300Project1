@@ -48,7 +48,7 @@ public class AddItemTests {
 	@Test
 	public void itemAddedWhenScanned() {
 		control.startSession();
-		ArrayList<SessionItem> items = control.order.getItems();
+		ArrayList<SessionItem> items = control.getOrder().getItems();
 		
 		// Add an item and check if the size increases
 		assertEquals(0, items.size());
@@ -67,13 +67,13 @@ public class AddItemTests {
 	@Test
 	public void systemBlockedWhenAdded() {
 		control.startSession();
-		ArrayList<SessionItem> items = control.order.getItems();
+		ArrayList<SessionItem> items = control.getOrder().getItems();
 		
 		// Scan an item
-		assertFalse(control.blocked);
+		assertFalse(control.isBlocked());
 		station.scanner.scan(ExampleItems.PeanutButter.barcodedItem);
 		assertEquals(1, items.size());
-		assertTrue(control.blocked);
+		assertTrue(control.isBlocked());
 		// Scan  an item after the system blocked, should be no items added.
 		station.scanner.scan(ExampleItems.PotatoChips.barcodedItem);
 		assertEquals(1, items.size());
@@ -87,11 +87,11 @@ public class AddItemTests {
 	public void totalPriceUpdatedCorrectly() {
 		control.startSession();
 		BigDecimal expectedTotal = new BigDecimal(0);
-		assertEquals(expectedTotal, control.order.getTotal());
+		assertEquals(expectedTotal, control.getOrder().getTotal());
 		// Scan an item and check if the price is updated
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
 		expectedTotal = expectedTotal.add(ExampleItems.AppleJuice.bdPrice);
-		assertEquals(expectedTotal, control.order.getTotal());
+		assertEquals(expectedTotal, control.getOrder().getTotal());
 	}
 	
 	/**
@@ -101,11 +101,11 @@ public class AddItemTests {
 	public void totalUnpaidPriceUpdatedCorrectly() {
 		control.startSession();
 		BigDecimal expectedUnpaid = new BigDecimal(0);
-		assertEquals(expectedUnpaid, control.order.getTotalUnpaid());
+		assertEquals(expectedUnpaid, control.getOrder().getTotalUnpaid());
 		// Scan an item and check if the price is updated
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
 		expectedUnpaid = expectedUnpaid.add(ExampleItems.AppleJuice.bdPrice);
-		assertEquals(expectedUnpaid, control.order.getTotalUnpaid());
+		assertEquals(expectedUnpaid, control.getOrder().getTotalUnpaid());
 	}
 	
 	/**
@@ -115,12 +115,12 @@ public class AddItemTests {
 	public void systemUnblocked() {
 		control.startSession();
 		// Scan an item
-		assertFalse(control.blocked);
+		assertFalse(control.isBlocked());
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
-		assertTrue(control.blocked);
+		assertTrue(control.isBlocked());
 		// Place an item on the scale
 		station.baggingArea.addAnItem(ExampleItems.AppleJuice.barcodedItem);
-		assertFalse(control.blocked);
+		assertFalse(control.isBlocked());
 	}
 	
 	/**
@@ -130,9 +130,9 @@ public class AddItemTests {
 	@Test
 	public void notifiesCustomerToBagItem() {
 		control.startSession();
-		assertEquals(control.customerNotified, "");
+		assertEquals(control.getCustomerNotified(), "");
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
-		assertEquals(control.customerNotified, control.notifyPlaceItemInBaggingAreaCode);
+		assertEquals(control.getCustomerNotified(), control.notifyPlaceItemInBaggingAreaCode);
 	}
 	
 	/**
@@ -141,12 +141,12 @@ public class AddItemTests {
 	@Test
 	public void itemAddedWhileSessionIsNotStarted() {
 		// Scan item before starting session, should be no items in the order list
-		ArrayList<SessionItem> items = control.order.getItems();
+		ArrayList<SessionItem> items = control.getOrder().getItems();
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
 		assertEquals(0, items.size());
 		// Start session and scan an item again, should now have 1 item in the order list
 		control.startSession();
-		items = control.order.getItems();
+		items = control.getOrder().getItems();
 		station.scanner.scan(ExampleItems.AppleJuice.barcodedItem);
 		assertEquals(1, items.size());
 		
