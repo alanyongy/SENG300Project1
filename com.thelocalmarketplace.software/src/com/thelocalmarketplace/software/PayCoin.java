@@ -168,8 +168,6 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 	        customerStationControl.notifyCustomer("Please insert your payment", customerStationControl.notifyInsertPaymentCode);
 	    }
 		
-		System.out.println(totalUnpaid);
-		
 		if (totalUnpaid.compareTo(BigDecimal.ZERO) == 0) {
 			fullPaid();
 		} 

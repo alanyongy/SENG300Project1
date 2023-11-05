@@ -56,10 +56,6 @@ public class CustomerStationControl {
 		order = new Order(this);
 	}
 	
-	public SelfCheckoutStation getSelfCheckoutStation() {
-		return station;
-	}
-	
 	public void startSession() {
 		order = new Order(this);
 		sessionStarted = true;
@@ -72,13 +68,13 @@ public class CustomerStationControl {
 	
 	public void notifyAttendant(String message, String code) {
 		lastNotification = ("Attendant: " + message);
-		System.out.println("Attendant: " + message);
+		//System.out.println("Attendant: " + message);
 		attendantNotified = code;
 	}
 	
 	public void notifyCustomer(String message, String code) {
 		lastNotification = ("Customer: " + message);
-		System.out.println("Customer: " + message);
+		//System.out.println("Customer: " + message);
 		customerNotified = code;
 	}
 	
@@ -114,54 +110,9 @@ public class CustomerStationControl {
 	public Boolean isBlocked() {
 		return blocked;
 	}
-	
-	
-	public SelfCheckoutStation getStation() {
-		return station;
-	}
-
-	public void setStation(SelfCheckoutStation station) {
-		this.station = station;
-	}
-
-	public Boolean getBlocked() {
-		return blocked;
-	}
-
-	public void setBlocked(Boolean blocked) {
-		this.blocked = blocked;
-	}
 
 	public Boolean getSessionStarted() {
 		return sessionStarted;
-	}
-
-	public void setSessionStarted(Boolean sessionStarted) {
-		this.sessionStarted = sessionStarted;
-	}
-
-	public PayCoin getPayCoinController() {
-		return payCoinController;
-	}
-
-	public void setPayCoinController(PayCoin payCoinController) {
-		this.payCoinController = payCoinController;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
-	public void setAttendantNotified(String attendantNotified) {
-		this.attendantNotified = attendantNotified;
-	}
-
-	public void setCustomerNotified(String customerNotified) {
-		this.customerNotified = customerNotified;
-	}
-
-	public void setLastNotification(String lastNotification) {
-		this.lastNotification = lastNotification;
 	}
 }
 
