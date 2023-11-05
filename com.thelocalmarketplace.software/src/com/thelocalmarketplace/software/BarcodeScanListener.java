@@ -17,8 +17,7 @@ import com.jjjwelectronics.scanner.BarcodeScannerListener;
 import com.jjjwelectronics.scanner.IBarcodeScanner;
 
 /**Listens for events thrown by a scanner and takes appropriate actions.
- * @author Alan
- *
+ * @author Alan Yong (30105707)
  */
 public class BarcodeScanListener implements BarcodeScannerListener{
 	CustomerStationControl customerStationControl;
@@ -29,35 +28,35 @@ public class BarcodeScanListener implements BarcodeScannerListener{
 
 	@Override
 	public void aDeviceHasBeenEnabled(IDevice<? extends IDeviceListener> device) {
-		// TODO Auto-generated method stub
-		
+		// Not used in current implementation.
 	}
 
 	@Override
 	public void aDeviceHasBeenDisabled(IDevice<? extends IDeviceListener> device) {
-		// TODO Auto-generated method stub
-		
+		// Not used in current implementation.
 	}
 
 	@Override
 	public void aDeviceHasBeenTurnedOn(IDevice<? extends IDeviceListener> device) {
-		// TODO Auto-generated method stub
-		
+		// Not used in current implementation.
 	}
 
 	@Override
 	public void aDeviceHasBeenTurnedOff(IDevice<? extends IDeviceListener> device) {
-		// TODO Auto-generated method stub
-		
+		// Not used in current implementation.
 	}
 
+	/**
+	 * Triggered whenever an item is scanned with the barcode scanner. Entry point for interaction
+	 * between the hardware and the software.
+	 */
 	@Override
 	public void aBarcodeHasBeenScanned(IBarcodeScanner barcodeScanner, Barcode barcode) {
+		// Silently ignores scan if a session has not been started
 		if (!customerStationControl.sessionStarted) {
 			return;
 		}
 		
 		customerStationControl.order.add(barcode);
 	}
-	
 }

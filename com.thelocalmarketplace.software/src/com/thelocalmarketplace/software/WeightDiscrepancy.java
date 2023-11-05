@@ -14,7 +14,6 @@ package com.thelocalmarketplace.software;
  * The status is changed by the ScaleListener class based on if a weight discrepancy is currently occurring. When weight discrepancy occurs, the customer is blocked
  * from performing further action such as paying or adding more items. 
  */
-
 public class WeightDiscrepancy {
 	
 	private boolean status = false;
@@ -40,9 +39,8 @@ public class WeightDiscrepancy {
 		Controller.block();		
 		Controller.notifyCustomer("Weight discrepancy detected. \nPlease adjust items in bagging area before paying or adding new items \n", Controller.notifyDiscrepancyCode);
 		Controller.notifyAttendant("Weight Discrepancy at Customer Station", Controller.notifyDiscrepancyCode);
-		
-		
 	}
+	
 	/**
 	 * Checks the status of this object so that repeated WeightDIscrepancyEvents are not triggered by the ScaleListener
 	 * @return
@@ -51,6 +49,4 @@ public class WeightDiscrepancy {
 	public boolean checkStatus() {
 		return(status);
 	}
-	
-	
 }

@@ -33,11 +33,10 @@ import com.tdc.coin.CoinValidatorObserver;
  * </p>
  * 
  */
-
 public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinStorageUnitObserver, CoinSlotObserver {
 
 	/**
-	 * creates PayCoin controller in CustomerStationControl class
+	 * Creates PayCoin controller in CustomerStationControl class
 	 * @param customerStationControl the station to which the controller is implemented
 	 */
 	public PayCoin(CustomerStationControl customerStationControl) {
@@ -46,25 +45,25 @@ public class PayCoin extends AbstractPay implements CoinValidatorObserver, CoinS
 
 	@Override
 	public void enabled(IComponent<? extends IComponentObserver> component) {
-		// not used in this iteration
+		// Not used in current implementation.
 		
 	}
 
 	@Override
 	public void disabled(IComponent<? extends IComponentObserver> component) {
-		// not used in this iteration
+		// Not used in current implementation.
 		
 	}
 
 	@Override
 	public void turnedOn(IComponent<? extends IComponentObserver> component) {
-		// not used in this iteration
+		// Not used in current implementation.
 		
 	}
 
 	@Override
 	public void turnedOff(IComponent<? extends IComponentObserver> component) {
-		// not used in this iteration
+		// Not used in current implementation.
 		
 	}
 

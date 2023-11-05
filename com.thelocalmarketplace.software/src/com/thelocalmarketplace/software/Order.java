@@ -11,10 +11,6 @@ package com.thelocalmarketplace.software;
 
 import com.thelocalmarketplace.hardware.*;
 import com.thelocalmarketplace.hardware.external.ProductDatabases;
-
-import ca.ucalgary.seng300.simulation.SimulationException;
-
-import com.jjjwelectronics.Item;
 import com.jjjwelectronics.Mass;
 import com.jjjwelectronics.scanner.Barcode;
 
@@ -24,7 +20,7 @@ import java.util.ArrayList;
 public class Order {
 
 	private CustomerStationControl customerStationControl;
-	private ArrayList<SessionItem> items;
+	private ArrayList<SessionItem> items; // items that have been added to the order
 	
 	private BigDecimal total; //total price of order
 	private BigDecimal totalUnpaid; //total UNPAID price of order
@@ -37,7 +33,6 @@ public class Order {
 	}
 
 	/**
-	 * 
 	 * @return the total unpaid amount of the order
 	 */
 	public BigDecimal getTotalUnpaid() {
@@ -53,7 +48,6 @@ public class Order {
 	}
 	
 	/**
-	 * 
 	 * @return the control class for the customer station that checks for payment, adds items,
 	 * and weight discrepancy of the items in the bagging area
 	 */
@@ -62,7 +56,6 @@ public class Order {
 	}
 	
 	/**
-	 * 
 	 * @return the list of items in the order
 	 */
 	public ArrayList<SessionItem> getItems() {
@@ -70,7 +63,6 @@ public class Order {
 	}
 	
 	/**
-	 * 
 	 * @return the calculated total price of the order 
 	 */
 	public BigDecimal getTotal() {
@@ -130,7 +122,7 @@ public class Order {
 	public boolean preconditionsMet(PriceLookUpCode plu) {return false;}
 	
 	/**
-	 * Gets the expected mass of the order
+	 * @return Mass: total expected mass of the order
 	 **/
 	public Mass getExpectedMass() {
 		Mass Sum = new Mass(0);

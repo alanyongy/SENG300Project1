@@ -11,8 +11,6 @@ package com.thelocalmarketplace.software;
 
 
 import com.thelocalmarketplace.hardware.*;
-import com.tdc.*;
-import com.tdc.coin.*;
 
 public class CustomerStationControl {
 	
@@ -42,58 +40,78 @@ public class CustomerStationControl {
 	public CustomerStationControl(SelfCheckoutStation customerStationControl) {
 		this.station = customerStationControl;
 		
-		//have to initialize weight dicrepency and add item controllers too (same way)
-		// DY: I made a constructor to initialize a ScaleListener object. Also registered it to the scale thats part of the station. Implement:
+		// Initialize scale listener
 		ScaleListener scaleListener = new ScaleListener(this);
 		customerStationControl.baggingArea.register(scaleListener);
-		// DY: end
 		
-		//initialize PayCoin control
+		// Initialize PayCoin control
 		payCoinController = new PayCoin(this);
 		customerStationControl.coinValidator.attach(payCoinController);
 		customerStationControl.coinStorage.attach(payCoinController);
 		
-		//register listener to station's barcode scanner
+		// Register listener to station's barcode scanner
 		BarcodeScanListener barcodeScanListener = new BarcodeScanListener(this);
 		customerStationControl.scanner.register(barcodeScanListener);
 		
+		// Create a new blank order
 		order = new Order(this);
 	}
 	
+	/**
+	 * @return currently connected self checkout station
+	 */
 	public SelfCheckoutStation getSelfCheckoutStation() {
 		return station;
 	}
 	
+	/**
+	 * Starts a session, unblocking and allowing further customer interaction.
+	 */
 	public void startSession() {
 		order = new Order(this);
 		sessionStarted = true;
 		unblock();
 	}
 	
+	/**
+	 * Triggers customer payment action with the payCoinController
+	 */
 	public void pay() {
 		payCoinController.pay(order);
 	}
 	
+	/**
+	 * Notifies the attendant to a message
+	 * @param message
+	 * 				String: message to send to the attendant
+	 * @param code
+	 * 				String: The code corresponding to the type of message
+	 */
 	public void notifyAttendant(String message, String code) {
 		lastNotification = ("Attendant: " + message);
 		System.out.println("Attendant: " + message);
 		attendantNotified = code;
 	}
 	
+	/**
+	 * Notifies the customer to a message
+	 * @param message
+	 * 				String: message to send to the customer
+	 * @param code
+	 * 				String: The code corresponding to the type of message
+	 */
 	public void notifyCustomer(String message, String code) {
 		lastNotification = ("Customer: " + message);
 		System.out.println("Customer: " + message);
 		customerNotified = code;
 	}
 	
+	/**
+	 * @return Order: the current order
+	 */
 	public Order getOrder() {
 		return order;
 	}
-	
-	/**need methods
-	 * method that calls notifyCustomer to scan next item
-	 * method that adds BarcodedProduct to order -  probably calls add method from order 
-	 */
 	
 	public String getCustomerNotified() {
 	    return customerNotified;
@@ -107,14 +125,23 @@ public class CustomerStationControl {
 		return lastNotification;
 	}
 	
+	/**
+	 * Blocks the system from customer interaction
+	 */
 	public void block() {
 		blocked = true;
 	}
 	
+	/**
+	 * Unblocks the system, allowing customers to interact
+	 */
 	public void unblock() {
 		blocked = false;
 	}
 	
+	/**
+	 * @return Boolean: true if the system is blocked, false otherwise
+	 */
 	public Boolean isBlocked() {
 		return blocked;
 	}

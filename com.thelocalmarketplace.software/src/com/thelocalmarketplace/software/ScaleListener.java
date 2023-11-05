@@ -10,12 +10,9 @@
  */
 package com.thelocalmarketplace.software;
 
-import java.util.ResourceBundle.Control;
-
 import com.jjjwelectronics.IDevice;
 import com.jjjwelectronics.IDeviceListener;
 import com.jjjwelectronics.Mass;
-import com.jjjwelectronics.Mass.MassDifference;
 import com.jjjwelectronics.scale.ElectronicScaleListener;
 import com.jjjwelectronics.scale.IElectronicScale;
 /**
@@ -92,33 +89,27 @@ public class ScaleListener implements ElectronicScaleListener {
 	
 	@Override
 	public void theMassOnTheScaleHasExceededItsLimit(IElectronicScale scale) {
-		// TODO Auto-generated method stub
+		// Not used in current implementation.
 	}
 	public void theMassOnTheScaleNoLongerExceedsItsLimit(IElectronicScale scale) {
-		// TODO Auto-generated method stub
+		// Not used in current implementation.
 		
 	}
 	@Override
 	public void aDeviceHasBeenEnabled(IDevice<? extends IDeviceListener> device) {
-		// TODO Auto-generated method stub
-		
+		// Not used in current implementation.
 	}
-
 	@Override
 	public void aDeviceHasBeenDisabled(IDevice<? extends IDeviceListener> device) {
-		// TODO Auto-generated method stub
-		
+		// Not used in current implementation.
 	}
-
 	@Override
 	public void aDeviceHasBeenTurnedOn(IDevice<? extends IDeviceListener> device) {
-		// TODO Auto-generated method stub
+		// Not used in current implementation.
 		
 	}
-
 	@Override
 	public void aDeviceHasBeenTurnedOff(IDevice<? extends IDeviceListener> device) {
-		// TODO Auto-generated method stub
-		
+		// Not used in current implementation.
 	}
 }
