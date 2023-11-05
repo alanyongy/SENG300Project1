@@ -9,7 +9,6 @@
  */
 package com.thelocalmarketplace.software;
 
-
 import com.thelocalmarketplace.hardware.*;
 
 public class CustomerStationControl {
@@ -55,6 +54,9 @@ public class CustomerStationControl {
 		order = new Order(this);
 	}
 	
+	/**
+	 * Starts a session, unblocking and allowing customer interaction.
+	 */
 	public void startSession() {
 		order = new Order(this);
 		sessionStarted = true;
@@ -101,14 +103,23 @@ public class CustomerStationControl {
 		return order;
 	}
 	
+	/**
+	 * @return String: customer notified code
+	 */
 	public String getCustomerNotified() {
 	    return customerNotified;
 	}
 	
+	/**
+	 * @return String: attendant notified code
+	 */
 	public String getAttendantNotified() {
 	    return attendantNotified;
 	}
 	
+	/**
+	 * @return String: code of the previous notification
+	 */
 	public String getLastNotification() {
 		return lastNotification;
 	}
@@ -134,6 +145,9 @@ public class CustomerStationControl {
 		return blocked;
 	}
 
+	/**
+	 * @return Boolean: flag to see if the session is currently active
+	 */
 	public Boolean getSessionStarted() {
 		return sessionStarted;
 	}
